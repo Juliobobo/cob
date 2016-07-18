@@ -5,14 +5,12 @@
  */
 
 var builder = require('botbuilder');
-//var connaissance = require('./data/data');
+var connaissance = require('./data/knowledge');
 var prompts = require('./data/prompts');
+var f = require('./usefulFunction');
+var conv = require('./conversation');
+var a = require('./askAnswer');
 
-var debug = function debug(file){
-    console.log('-----------');
-    console.log(file);
-    console.log('-----------');
-};
 
 //Je me connecte en mode console
 var connector = new builder.ConsoleConnector().listen();
@@ -27,7 +25,7 @@ var dialog = new builder.IntentDialog({ recognizers: [recognizer] });
 var cob = 'cob > ';
 var human = 'You > ';
 
-console.log(cob + 'Bonjour !');
+//console.log(cob + 'Bonjour !');
 
 bot.dialog('/', dialog);
 
@@ -38,96 +36,54 @@ dialog.onDefault(builder.DialogAction.send(cob + prompts.accueil));
 dialog.matches('aide', '/aide');
 bot.dialog('/aide', [
     function(session){
-        debug('aide');
+        f.debug('aide');
         builder.Prompts.text(session, cob + prompts.reponse);
     },
     function(session, results){
         debug(results.response);
         if(results.response == 1){
             session.send(cob + prompts.fonctionnement);
-            session.endDialog();
+            next();
             
         }
         if(results.response == 2){
             session.send(cob + prompts.implementer);
-            session.endDialog();
+//            session.endDialog();
         }
         else{
-            session.endDialog();
+//            session.endDialog();
         }
     }
 ]);
 
-/* CONCERNANT CGI
+/*
+ * On essaie de crée un bot qui parle de tout et n'importe quoi
+ * 
+ */
+dialog.matches('salutation', conv.salutation);
+dialog.matches('sante', conv.sante);
+//dialog.matches('none', conv.none); car default qui 
+
+/* 
+ * 
+ * Element concernant CGI
  * 
  */
 
+var cgi = 'nomEntreprise';
+
 //description CGI
-dialog.matches('description', [
-    question,
-    reponse('description')
-]);
+dialog.matches('description', [a.question(cgi), a.reponse('description')]);
 
 //fondateur CGI
-dialog.matches('fondateur', [
-    question,
-    reponse('fondateur')
-]);
+dialog.matches('fondateur', [a.question(cgi), a.reponse('fondateur')]);
 
 //localisation CGI
-dialog.matches('localisation', [
-    question,
-    reponse('localisation')
-]);
-    
+dialog.matches('localisation', [a.question(cgi), a.reponse('localisation')]);
 
-    
+//website CGI -- contact
+dialog.matches('contact', [a.question(cgi), a.reponse('website')]);
 
+//solution CGI
+dialog.matches('solution', [a.question(cgi), a.reponse('solution')]);
 
-//Fonction question
-function question(session, args, next){
-    debug('Fonction question');
-        
-    var data = builder.EntityRecognizer.findEntity(args.entities, 'nomEntreprise');
-    var bestWay;
-
-    //Si on a la data
-    if(data){
-        //On essaye de trouver le meilleur résultat possible
-        bestWay = builder.EntityRecognizer.findBestMatch(connaissance, data.entity);
-    }else if(session.dialogData.bestWay){
-        bestWay = session.dialogData.bestWay;
-    }
-    
-    if(!bestWay){
-
-    }else{
-        next({response: bestWay});
-    }
-}
-
-//Fonction reponse
-function reponse(champsInfo){
-    return function(session, results){
-        debug('Fonction réponse');
-        if(results.response){
-            var data = results.response;
-            session.send(cob + connaissance[data.entity][champsInfo]);
-        }else{
-            session.send(prompts.error);
-        }
-    };
-}
-
-
-//Les données du bot, à mettre dans un autre fichier apres
-var connaissance = {
-  'CGI': {
-      description: 'Groupe CGI est un groupe canadien actif dans le domaine des services en technologies de l\'information et de la communication et en gestion des processus d\'affaires.' ,
-      fondateur: 'Michael E. Roach',
-      localisation: 'Le siège France se trouve à la défense ! (sinon c\'est au Canada)',
-      website: 'www.cgi.fr',
-      activité: 'Finance ...',
-      solution: 'Pleins'
-  }
-};

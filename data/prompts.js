@@ -11,7 +11,11 @@ module.exports = {
                 2- Ce qui est implémenté",
     aideMessage: "Besoin d'aide ? ", 
     fonctionnement: " Je suis capable de répondre à:\n\
-            Connais-tu cgi ? (et les variantes)",
+            Connais-tu cgi ? (et les variantes), \n\
+            Qui a fondé CGI ?, \n\
+            Ou est localisé CGI ?, \n\
+            Comment puis je contacter CGI ?,\n\
+            Quelles solutions propose CGI ? ",
     accueil: 'Que puis je faire pour vous ? ',
     error: 'Je ne comprends pas ce que vous voulez !',
     implementer: 'Connais-tu cgi ?'
