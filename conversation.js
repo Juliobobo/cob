@@ -37,7 +37,7 @@ module.exports = {
                 }
                 
             }else{
-                session.send(prompts.error);
+                session.send(cob + prompts.error);
             }
         }
     ],
@@ -50,14 +50,49 @@ module.exports = {
                 r = f.rand(1, 3);
                 session.send(cob + results.response[r] + ' Et toi ?' );
             }else{
-                session.send(prompts.error);
+                session.send(cob + prompts.error);
             }
         }
-    ]
+    ],
     
 //    //None
 //    none:[
 //        question(''),
 //        reponse(f.rand(1, 3))
 //    ]
+    
+    news:[
+        a.question('info'),
+        function(session, results, next){
+            f.debug('news');
+            if(results.response){
+                var data = results.response;
+                builder.Prompts.text(session, cob + data['qChoice'] + '\n\n' +
+                        data['1'] + '\n ou  \n' + data['all'] + '\n \n source: ' +
+                        data['source']);
+            }else{
+                session.send(cob + prompts.error);
+            }
+        },
+        function(session, results){
+            f.debug('news2');
+            if(results.response){
+                var nTitle = results.response;
+                
+                if(nTitle == 1){
+                    f.scraping(function(err, t){
+                        session.send(cob + t[0]);
+                    });
+                }else if(nTitle == 2){
+                    f.scraping(function(err, t){
+                        session.send(cob + t.join("\n *"));
+                    });
+                }else{
+                   session.send(cob + prompts.error); 
+                }
+            }else{
+               session.send(cob + prompts.error); 
+            }
+        }
+    ]
 };

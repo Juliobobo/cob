@@ -6,5 +6,12 @@
 
 
 var f = require('../usefulFunction');
+//f.scraping(function(results));
+var data = [];
+var scrap = f.scraping(function(err, results){
+     
+     return results;
+});
 
-f.scraping();
+
+console.log(scrap);

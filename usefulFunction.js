@@ -29,18 +29,17 @@ module.exports = {
  * @param url de la page ?
  * @return title ?
  **/
-    scraping : function(){
+    scraping : function(callback){
         
-        console.log('En cours d\'implémentation !');
+//        console.log('En cours d\'implémentation !');
 //        var url = 'https://news.google.fr/news?cf=all&hl=fr&pz=1&ned=fr&output=rss';
         var url = 'https://news.google.fr/';
         
         //Je répertorie tous les title
-        var data = {};
-        var sections = [];
+        var data = [];
         
         //Load the page
-        request(url, function(err, resp, body){
+       request(url, function(err, resp, body){
 //          console.log(err || body); 
 //          console.log(resp); 
 //            console.log(body);
@@ -49,40 +48,28 @@ module.exports = {
                 //Ressemble à la syntaxe jQuery
                 var $ = cheerio.load(body);
          
-                $('.section').each(function(i, elem){
-                   var title = $('.esc-lead-article-title').text();
-                   var sectionName = $('.section-name').text();
-                   
-                   data[i] = {
-                       section: sectionName,
-                       title: title
-                       
-                   };
+//                $('.section').each(function(i, elem){
+//                   var title = $('.esc-lead-article-title').text();
+//                   var sectionName = $('.section-name').text();
+//                   
+//                   data[i] = {
+//                       section: sectionName,
+//                       title: title
+//                       
+//                   };
+//                });
+
+                $('h2.esc-lead-article-title').each(function(i, elem){
+                    data[i] = $(this).text();                    
                 });
+                
+                callback(null, data);
             }
-            
-            // on enleve le each et on test la section par exemple
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-            // 
-//            for(var i = 0; i<titles.length; i++){
-//                console.log(sections[i]);
+
+            //Affichage
+//            for(var i = 0; i<nTitle; i++){
+//                console.log(i+1 +': '+ data[i] + '.');
 //            }
-//            console.log(sections.length);
-            
-            //Affichage tableau
-//            for(var i = 0; i<titles.length; i++){
-//                console.log(titles[i]);
-//            }
-            
-            console.log(data);
         });
-        
     }
 };

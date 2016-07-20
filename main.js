@@ -5,21 +5,50 @@
  */
 
 var builder = require('botbuilder');
+var restify = require('restify');
 var connaissance = require('./data/knowledge');
 var prompts = require('./data/prompts');
 var f = require('./usefulFunction');
 var conv = require('./conversation');
 var a = require('./askAnswer');
 
+//=========================================================
+// Bot Setup
+//=========================================================
 
+// Setup Restify Server
+//var server = restify.createServer();
+//server.listen(process.env.port || process.env.PORT || 3978, function () {
+//   console.log('%s listening to %s', server.name, server.url); 
+//});
+//  
+//// Create chat bot
+//var connector = new builder.ChatConnector({
+//    appId: 'cob',
+//    appPassword: 'cgi'
+//});
+//var bot = new builder.UniversalBot(connector);
+//server.post('/api/messages', connector.listen());
+
+/**
+ * Mode console
+ **/
 //Je me connecte en mode console
 var connector = new builder.ConsoleConnector().listen();
 var bot = new builder.UniversalBot(connector);
+
+//=========================================================
+
+//=========================================================
+// Luis Setup
+//=========================================================
 
 //On connecte LUIS
 var model = process.env.model || 'https://api.projectoxford.ai/luis/v1/application?id=95517bc1-76fc-4d65-81a9-63456aee5245&subscription-key=e44f708e8fb2425587490ec44f9eef66&q=';
 var recognizer = new builder.LuisRecognizer(model);
 var dialog = new builder.IntentDialog({ recognizers: [recognizer] });
+
+//=========================================================
 
 //Les var des deux personnes qui parle
 var cob = 'cob > ';
@@ -56,19 +85,22 @@ bot.dialog('/aide', [
     }
 ]);
 
-/*
+/**
  * On essaie de crée un bot qui parle de tout et n'importe quoi
- * 
- */
+ **/
 dialog.matches('salutation', conv.salutation);
 dialog.matches('sante', conv.sante);
 //dialog.matches('none', conv.none); car default qui 
 
-/* 
- * 
- * Element concernant CGI
- * 
- */
+
+/**
+ * Pour les news
+ **/
+dialog.matches('news', conv.news);
+
+/** 
+ * Element concernant CGI 
+ **/
 
 var cgi = 'nomEntreprise';
 

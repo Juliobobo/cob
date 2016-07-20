@@ -31,9 +31,20 @@ module.exports = {
         
     },
     
+    'repMerci':{
+        1: 'No problem :)'
+    },
+    
     'none':{
         1: 'Ok !',
         2: 'Okayyy !',
         3: 'D\'accord'
+    },
+    
+    'news':{
+        qChoice: 'Que voulez vous ?',
+        1: '1- La dernière news',
+        all:'2- Toutes les news du moments',
+        source: 'https://news.google.fr'
     }
 };
