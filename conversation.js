@@ -10,30 +10,84 @@ var f = require('./usefulFunction');
 var connaissance = require('./data/knowledge');
 var prompts = require('./data/prompts');
 var a = require('./askAnswer');
+var auth = require('./auth');
 
 var cob = 'cob > ';
 
 module.exports = {
     salutation :[
-        a.question('salutation'), 
+//        a.question('salutation'),
+        function(session, args, next){
+                console.log('Authentification');
+                session.userData.name;
+                if(!session.userData.name){
+                    session.beginDialog('/profile');
+                }else{
+                    next();
+                }
+            },
         
         //reponse avec traitement
         function(session, results){
             f.debug('Salutation');
+    
+            var classe = 'salutation';
+            var date = new Date();
+            var heure = date.getHours();
+            
+            //traitement du prénom à améliorer avec une vraie fonction de traitement
+            var userName = session.userData.name;
+            //On le met en minuscule
+            userName = userName.toLowerCase().replace();;
+            //On enleve les caractères ?, ,, /, ...
+            for(var i = 0; i < userName.length; i++){
+                if(userName[i] == '?' || userName[i] == '!' || userName[i] == ','){
+                    userName = userName.replace(userName[i], "");
+                }
+            }
+            
+            if(heure < 8){
+                session.send(cob + connaissance[classe]['matin'] + ' %s', userName + " !");
+            }else if(heure > 11  && heure < 14){
+                session.send(cob + connaissance[classe]['midi'] + ' %s', userName + " ?");
+            }else if(heure > 18){
+                session.send(cob + connaissance[classe]['soir'] + ' %s', userName + " ?");
+            }else{
+                session.send(cob + connaissance[classe]['default']+ ' %s', userName + " !");
+            }
+            
+            session.send(cob + prompts.accueil);
+        }
+    ],
+    
+    remerciment:[
+        a.question(''),
+        function(session, results){
+            f.debug('Remerciment');
             if(results.response){
-                
+                r = f.rand(1,4);
+                session.send(cob + results.response[r] );
+
+            }
+        }
+    ],
+    
+    name: [
+        a.question('pronom', 0),
+        function(session, results){
+            f.debug('name');            
+            if(results.response){
                 var data = results.response;
-                var date = new Date();
-                var heure = date.getHours();
                 
-                if(heure < 8){
-                    session.send(cob + connaissance[data.entity]['matin']);
-                }else if(heure > 11  && heure < 14){
-                    session.send(cob + connaissance[data.entity]['midi']);
-                }else if(heure > 18){
-                    session.send(cob + connaissance[data.entity]['soir']);
-                }else{
-                    session.send(cob + connaissance[data.entity]['default']);
+                if(data.entity == 'mon' || data.entity == 'je'){
+                    if(!session.userData.name){
+                        f.debug('Pas implémenté');
+                    }else{
+                        session.send(cob + 'Tu t\'appelles %s !', session.userData.name);
+                    }
+                }
+                if(data.entity == 'ton' || data.entity == 'tu'){
+                    session.send(cob + 'Je m\'appelle cob !');
                 }
                 
             }else{
@@ -62,9 +116,10 @@ module.exports = {
 //    ]
     
     news:[
-        a.question('info'),
+        a.question('info', 1),
         function(session, results, next){
             f.debug('news');
+            f.debug(results);
             if(results.response){
                 var data = results.response;
                 builder.Prompts.text(session, cob + data['qChoice'] + '\n\n' +

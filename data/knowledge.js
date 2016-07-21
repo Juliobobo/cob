@@ -8,7 +8,7 @@
  */
 
 module.exports = {
-  'nomEntreprise': {
+  'cgi': {
         description: 'Groupe CGI est un groupe canadien actif dans le domaine des services en technologies de l\'information et de la communication et en gestion des processus d\'affaires.' ,
         fondateur: 'Michael E. Roach',
         localisation: 'Le siège France se trouve à la défense ! (sinon c\'est au Canada)',
@@ -18,33 +18,45 @@ module.exports = {
     },
     
     'salutation': {
-        matin : 'Bonjour, tu es matinal dis donc. Ou tu te couche tard, au choix.',
-        midi: 'Salut ! Tu ne manges pas ?',
-        soir: 'Salut ! Tu passes une bonne soirée ?',
-        default: 'Bonjour !' 
+        matin : 'Bonjour, tu es matinal dis donc. Ou tu te couche tard, au choix, hein',
+        midi: 'Salut ! Tu ne manges pas',
+        soir: 'Salut ! Tu passes une bonne soirée',
+        default: 'Bonjour' 
+    },
+    
+    'remerciment': {
+        1: 'No problem !',
+        2: 'Je suis gentil par nature donc je te réponds ...',
+        3: 'Je t\'en pris !',
+        4: 'Pas de soucis !'
     },
     
     'sante':{
         1: 'Etant un robot, je vais toujours bien :)',
         2: 'Moi ça va toujours, voyons !',
-        3: 'On m\'a implémenté pour être toujours heureux !',
-        
-    },
-    
-    'repMerci':{
-        1: 'No problem :)'
+        3: 'On m\'a implémenté pour être toujours heureux !'
     },
     
     'none':{
         1: 'Ok !',
         2: 'Okayyy !',
         3: 'D\'accord'
+        
     },
+    
+    'ton':{},
+    'tu':{},
+    'mon':{},
+    'je':{},
     
     'news':{
         qChoice: 'Que voulez vous ?',
         1: '1- La dernière news',
         all:'2- Toutes les news du moments',
         source: 'https://news.google.fr'
+    },
+    
+    'politesse': {
+        presentation: 'Quand on est poli on dit bonjour !'
     }
 };

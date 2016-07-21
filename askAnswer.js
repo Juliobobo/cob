@@ -12,25 +12,42 @@ var prompts = require('./data/prompts');
 var cob = 'cob > ';
 
 module.exports = {
-    //Fonction question
-    question: function(type){
+    /**
+     * Fonction question avec authentication
+     * si auth = 1 on doit connaitre le prenom
+     * si auth = 0 on s'en fiche
+     **/
+    question: function(type, auth){
         return function(session, args, next){
             f.debug('Fonction question');
             var data = builder.EntityRecognizer.findEntity(args.entities,type);
             var bestWay;;
-            
-            //Si on a la data
-            if(data){
-                //On essaye de trouver le meilleur résultat possible
-                bestWay = builder.EntityRecognizer.findBestMatch(connaissance, data.type);
-            }else if(session.dialogData.bestWay){
-                bestWay = session.dialogData.bestWay;
+            //authentification nécessaire
+            if(auth == 1){
+                if(!session.userData.name){
+                    session.send(cob + connaissance['politesse']['presentation']);                    
+                }else{
+                    auth = 0;
+                }
             }
-        
-            if(!bestWay){
-                next({response: connaissance[args.intent]});
+            
+            //authentification non nécessaure
+            if(auth == 0){
+                //Si on a la data
+                if(data){
+                    //On essaye de trouver le meilleur résultat possible
+                    bestWay = builder.EntityRecognizer.findBestMatch(connaissance, data.entity);
+                }else if(session.dialogData.bestWay){
+                    bestWay = session.dialogData.bestWay;
+                }
+
+                if(!bestWay){
+                    next({response: connaissance[args.intent]});
+                }else{
+                    next({response: bestWay});
+                }
             }else{
-                next({response: bestWay});
+//                session.send(cob + prompts.error);
             }
         };
     }, 
@@ -44,7 +61,7 @@ module.exports = {
                 var data = results.response;
                 session.send(cob + connaissance[data.entity][champsInfo]);
             }else{
-                session.send(prompts.error);
+                session.send(cob + prompts.error);
             }
         };
     }
