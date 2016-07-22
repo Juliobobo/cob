@@ -6,11 +6,10 @@
 
 var builder = require('botbuilder');
 var restify = require('restify');
-var connaissance = require('./data/knowledge');
 var prompts = require('./data/prompts');
-var f = require('./usefulFunction');
+var f = require('./functions/usefulFunction');
 var conv = require('./conversation');
-var a = require('./askAnswer');
+var a = require('./functions/askAnswer');
 
 //=========================================================
 // Bot Setup
@@ -20,22 +19,21 @@ var a = require('./askAnswer');
  * Tentative de chat html / nodejs 
  **/
 
-
 //=========================================================
 
 // Setup Restify Server
-var server = restify.createServer();
-server.listen(process.env.port || process.env.PORT || 3978, function () {
-   console.log('%s listening to %s', server.name, server.url); 
-});
+// var server = restify.createServer();
+// server.listen(process.env.port || process.env.PORT || 3978, function () {
+//   console.log('%s listening to %s', server.name, server.url); 
+// });
 
-// Create chat bot
-var connector = new builder.ChatConnector({
-    appId: process.env.MICROSOFT_APP_ID,
-    appPassword: process.env.MICROSOFT_APP_PASSWORD
-});
-var bot = new builder.UniversalBot(connector);
-server.post('/api/messages', connector.listen());
+// // Create chat bot
+// var connector = new builder.ChatConnector({
+//     appId: process.env.MICROSOFT_APP_ID,
+//     appPassword: process.env.MICROSOFT_APP_PASSWORD
+// });
+// var bot = new builder.UniversalBot(connector);
+// server.post('/api/messages', connector.listen());
 
 /**
  * Code d'alban
@@ -61,8 +59,8 @@ server.post('/api/messages', connector.listen());
  * Mode console
  **/
 //Je me connecte en mode console
-//var connector = new builder.ConsoleConnector().listen();
-//var bot = new builder.UniversalBot(connector);
+var connector = new builder.ConsoleConnector().listen();
+var bot = new builder.UniversalBot(connector);
 
 //=========================================================
 

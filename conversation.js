@@ -6,11 +6,11 @@
 
 
 var builder = require('botbuilder');
-var f = require('./usefulFunction');
+var f = require('./functions/usefulFunction');
 var connaissance = require('./data/knowledge');
 var prompts = require('./data/prompts');
-var a = require('./askAnswer');
-var auth = require('./auth');
+var a = require('./functions/askAnswer');
+var s = require("./functions/scraping")
 
 var cob = 'cob > ';
 
@@ -65,7 +65,7 @@ module.exports = {
         function(session, results){
             f.debug('Remerciment');
             if(results.response){
-                r = f.rand(1,4);
+                 var r = f.rand(1,4);
                 session.send(cob + results.response[r] );
 
             }
@@ -103,7 +103,7 @@ module.exports = {
         function(session, results){
             f.debug('sante');
             if (results.response){
-                r = f.rand(1, 3);
+                var r = f.rand(1, 3);
                 session.send(cob + results.response[r] + ' Et toi ?' );
             }else{
                 session.send(cob + prompts.error);
@@ -121,7 +121,6 @@ module.exports = {
         a.question('', 1), //J'ai enlevé type = 'news'
         function(session, results, next){
             f.debug('news');
-            f.debug(results);
             if(results.response){
                 var data = results.response;
                 builder.Prompts.text(session, cob + data['qChoice'] + '\n\n' +
@@ -136,12 +135,17 @@ module.exports = {
             if(results.response){
                 var nTitle = results.response;
                 
-                if(nTitle == 1){
-                    f.scraping(function(err, t){
+                nTitle = nTitle.replace(/ /g, '').replace(/é/g,'e').replace(/è/g,'e')
+                                .toLowerCase();
+                
+                f.debug(nTitle);
+                
+                if(nTitle == 'laderniere' || nTitle == 'ladernierenews'){
+                    s.scraping(function(err, t){
                         session.send(cob + t[0]);
                     });
-                }else if(nTitle == 2){
-                    f.scraping(function(err, t){
+                }else if(nTitle == 'toutes'){
+                    s.scraping(function(err, t){
                         session.send(cob + t.join("\n *"));
                     });
                 }else{
@@ -151,5 +155,9 @@ module.exports = {
                session.send(cob + prompts.error); 
             }
         }
-    ]
+    ],
+    
+    virement:[
+        a.question('', 1),
+    ],
 };

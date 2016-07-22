@@ -51,8 +51,8 @@ module.exports = {
     
     'news':{
         qChoice: 'Que voulez vous ?',
-        1: '1- La dernière news',
-        all:'2- Toutes les news du moments',
+        1: 'La dernière news',
+        all:'Toutes les news du moments',
         source: 'https://news.google.fr'
     },
     
