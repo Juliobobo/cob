@@ -61,7 +61,7 @@ module.exports = {
     ],
     
     remerciment:[
-        a.question(''),
+        a.question('', 0),
         function(session, results){
             f.debug('Remerciment');
             if(results.response){
@@ -82,6 +82,8 @@ module.exports = {
                 if(data.entity == 'mon' || data.entity == 'je'){
                     if(!session.userData.name){
                         f.debug('Pas implémenté');
+                        session.send(cob + 'Je ne sais pas');
+//                        session.beginDialog('/profile');
                     }else{
                         session.send(cob + 'Tu t\'appelles %s !', session.userData.name);
                     }
@@ -97,7 +99,7 @@ module.exports = {
     ],
     
     sante:[
-        a.question(''),
+        a.question('', 0),
         function(session, results){
             f.debug('sante');
             if (results.response){
@@ -116,7 +118,7 @@ module.exports = {
 //    ]
     
     news:[
-        a.question('info', 1),
+        a.question('', 1), //J'ai enlevé type = 'news'
         function(session, results, next){
             f.debug('news');
             f.debug(results);

@@ -16,22 +16,30 @@ var a = require('./askAnswer');
 // Bot Setup
 //=========================================================
 
+/**
+ * Tentative de chat html / nodejs 
+ **/
+
+
+//=========================================================
+
 // Setup Restify Server
-//var server = restify.createServer();
-//server.listen(process.env.port || process.env.PORT || 3978, function () {
-//   console.log('%s listening to %s', server.name, server.url); 
-//});
-//
-//// Create chat bot
-//var connector = new builder.ChatConnector({
-//    appId: process.env.MICROSOFT_APP_ID,
-//    appPassword: process.env.MICROSOFT_APP_PASSWORD
-//});
-//var bot = new builder.UniversalBot(connector);
-//server.post('/api/messages', connector.listen());
+var server = restify.createServer();
+server.listen(process.env.port || process.env.PORT || 3978, function () {
+   console.log('%s listening to %s', server.name, server.url); 
+});
+
+// Create chat bot
+var connector = new builder.ChatConnector({
+    appId: process.env.MICROSOFT_APP_ID,
+    appPassword: process.env.MICROSOFT_APP_PASSWORD
+});
+var bot = new builder.UniversalBot(connector);
+server.post('/api/messages', connector.listen());
 
 /**
  * Code d'alban
+ * N'est plus fonctionnel
  **/
 
 //var connector = new builder.ChatConnector({
@@ -53,8 +61,8 @@ var a = require('./askAnswer');
  * Mode console
  **/
 //Je me connecte en mode console
-var connector = new builder.ConsoleConnector().listen();
-var bot = new builder.UniversalBot(connector);
+//var connector = new builder.ConsoleConnector().listen();
+//var bot = new builder.UniversalBot(connector);
 
 //=========================================================
 
@@ -80,7 +88,7 @@ var human = 'You > ';
  **/
 bot.dialog('/profile', [
    function(session){
-       builder.Prompts.text(session, cob + 'Comment vous appelez-vous ?');
+       builder.Prompts.text(session, cob + 'Bonjour! Comment vous appelez-vous ?');
    },
    function(session, results){
        session.userData.name = results.response;
