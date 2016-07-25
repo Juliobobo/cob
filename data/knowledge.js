@@ -58,5 +58,14 @@ module.exports = {
     
     'politesse': {
         presentation: 'Quand on est poli on dit bonjour !'
+    },
+    
+    //Connaissance pour la fonction wanToKnow
+    'dontKnow': {
+        wantToKnow: 'J\'aimerais mieux te connaitre !'
+    },
+    
+    'wNews': {
+        choice : 'Tous/sport/santé/economie/News à la une'
     }
 };

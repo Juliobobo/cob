@@ -10,7 +10,8 @@ var f = require('./functions/usefulFunction');
 var connaissance = require('./data/knowledge');
 var prompts = require('./data/prompts');
 var a = require('./functions/askAnswer');
-var s = require("./functions/scraping")
+var s = require("./functions/scraping");
+var w = require("./functions/wantToKnow")
 
 var cob = 'cob > ';
 
@@ -48,7 +49,7 @@ module.exports = {
             
             if(heure < 8){
                 session.send(cob + connaissance[classe]['matin'] + ' %s', userName + " !");
-            }else if(heure > 11  && heure < 14){
+            }else if(heure > 11  && heure < 13){
                 session.send(cob + connaissance[classe]['midi'] + ' %s', userName + " ?");
             }else if(heure > 18){
                 session.send(cob + connaissance[classe]['soir'] + ' %s', userName + " ?");
@@ -118,11 +119,21 @@ module.exports = {
 //    ]
     
     news:[
+       
+        
         a.question('', 1), //J'ai enlevé type = 'news'
+                        
+        //On check si on connait des pref de l'utilisateur
+        // w.wantToKnow('wNews'),
+        // w.wantToKnow('wNews'),
+        
+        //Reponse
         function(session, results, next){
             f.debug('news');
+            // f.debug(results);
             if(results.response){
                 var data = results.response;
+        
                 builder.Prompts.text(session, cob + data['qChoice'] + '\n\n' +
                         data['1'] + '\n ou  \n' + data['all'] + '\n \n source: ' +
                         data['source']);
@@ -141,11 +152,11 @@ module.exports = {
                 f.debug(nTitle);
                 
                 if(nTitle == 'laderniere' || nTitle == 'ladernierenews'){
-                    s.scraping(function(err, t){
+                    s.scraping('', function(err, t){
                         session.send(cob + t[0]);
                     });
                 }else if(nTitle == 'toutes'){
-                    s.scraping(function(err, t){
+                    s.scraping('', function(err, t){
                         session.send(cob + t.join("\n *"));
                     });
                 }else{
@@ -157,6 +168,7 @@ module.exports = {
         }
     ],
     
+    //Non implémenté même Luis
     virement:[
         a.question('', 1),
     ],

@@ -5,13 +5,17 @@
  */
 
 
-var f = require('../functions/usefulFunction');
-//f.scraping(function(results));
-var data = [];
-var scrap = f.scraping(function(err, results){
-     
-     return results;
+var f = require('../functions/scraping');
+f.scraping('',function(err, res){
+   console.log(res.length);
+   for(var i = 0; i<res.length; i++){
+       console.log(res[i]);
+   }
 });
 
-
-console.log(scrap);
+f.scraping('sport',function(err, res){
+   console.log(res.length);
+   for(var i = 0; i<res.length; i++){
+       console.log(res[i]);
+   }
+});

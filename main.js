@@ -10,6 +10,7 @@ var prompts = require('./data/prompts');
 var f = require('./functions/usefulFunction');
 var conv = require('./conversation');
 var a = require('./functions/askAnswer');
+ var brain = require("./data/knowledge");
 
 //=========================================================
 // Bot Setup
@@ -22,18 +23,19 @@ var a = require('./functions/askAnswer');
 //=========================================================
 
 // Setup Restify Server
-var server = restify.createServer();
-server.listen(process.env.PORT, process.env.IP, function () {
-   console.log('%s listening to %s', server.name, server.url); 
-});
+// var server = restify.createServer();
+// server.listen(process.env.PORT, process.env.IP, function () {
+//   console.log('%s listening to %s', server.name, server.url); 
+// });
 
-// Create chat bot
-var connector = new builder.ChatConnector({
-    appId: process.env.MICROSOFT_APP_ID,
-    appPassword: process.env.MICROSOFT_APP_PASSWORD
-});
-var bot = new builder.UniversalBot(connector);
-server.post('/api/messages', connector.listen());
+
+// // Create chat bot
+// var connector = new builder.ChatConnector({
+//     appId: process.env.MICROSOFT_APP_ID,
+//     appPassword: process.env.MICROSOFT_APP_PASSWORD
+// });
+// var bot = new builder.UniversalBot(connector);
+// server.post('/api/messages', connector.listen());
 
 /**
  * Code d'alban
@@ -59,8 +61,8 @@ server.post('/api/messages', connector.listen());
  * Mode console
  **/
 //Je me connecte en mode console
-// var connector = new builder.ConsoleConnector().listen();
-// var bot = new builder.UniversalBot(connector);
+var connector = new builder.ConsoleConnector().listen();
+var bot = new builder.UniversalBot(connector);
 
 //=========================================================
 
@@ -94,6 +96,24 @@ bot.dialog('/profile', [
    }
 ]);
 /************************************************/
+
+/**
+ *  Demande de wantToKnow
+ **/
+// bot.dialog('/wantToKnow',[
+//     function(session){
+//         builder.Prompts.text(session, brain['dontKnow']['wantToKnow'] + 
+//                                       ' oo');
+//     },
+//     function(session, results){
+//         session.userData.type = results.response;
+//         f.debug(session.userData.type);
+//         session.endDialog();
+//     }
+// ]); a enlever
+
+
+
 
 /**
  * Point d'entrée de la conversation 
