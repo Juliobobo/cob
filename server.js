@@ -1,15 +1,9 @@
-var app = require('express')();
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+var http = require("http");
 
-app.get('/', function(req, res){
-  res.sendfile('public/index.html');
+var server = http.createServer(function(req, res){
+  console.log("On se connecte !");
 });
 
-io.on('connection', function(socket){
-  console.log('a user connected');
-});
+server.listen(process.env.PORT, process.env.IP);
 
-http.listen(8081, function(){
-  console.log('listening on *:3000');
-});
+var io = require("socket.io");
