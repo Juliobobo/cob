@@ -20,7 +20,14 @@ module.exports = {
 //        a.question('salutation'),
         function(session, args, next){
                 console.log('Authentification');
-                session.userData.name;
+                // session.userData.name;
+                
+                /**
+                 * Mise en place des compteur
+                 **/
+                 //News
+                 session.userData.checkNews = 0;
+                
                 if(!session.userData.name){
                     session.beginDialog('/profile');
                 }else{
@@ -48,13 +55,13 @@ module.exports = {
             }
             
             if(heure < 8){
-                session.send(cob + connaissance[classe]['matin'] + ' %s', userName + " !");
+                session.send(cob + connaissance[classe]['matin'] + ' %s !', userName);
             }else if(heure > 11  && heure < 13){
-                session.send(cob + connaissance[classe]['midi'] + ' %s', userName + " ?");
+                session.send(cob + connaissance[classe]['midi'] + ' %s !', userName);
             }else if(heure > 18){
-                session.send(cob + connaissance[classe]['soir'] + ' %s', userName + " ?");
+                session.send(cob + connaissance[classe]['soir'] + ' %s !', userName);
             }else{
-                session.send(cob + connaissance[classe]['default']+ ' %s', userName + " !");
+                session.send(cob + connaissance[classe]['default']+ ' %s !', userName);
             }
             
             session.send(cob + prompts.accueil);
@@ -119,29 +126,46 @@ module.exports = {
 //    ]
     
     news:[
-       
-        
         a.question('', 1), //J'ai enlevé type = 'news'
                         
         //On check si on connait des pref de l'utilisateur
-        // w.wantToKnow('wNews'),
-        // w.wantToKnow('wNews'),
+        w.wantToKnow('wNews'),
+        w.recordOrNot('wNews'),
         
         //Reponse
         function(session, results, next){
-            f.debug('news');
-            // f.debug(results);
+            
             if(results.response){
+                
                 var data = results.response;
-        
-                builder.Prompts.text(session, cob + data['qChoice'] + '\n\n' +
-                        data['1'] + '\n ou  \n' + data['all'] + '\n \n source: ' +
+                
+                var pref = session.userData.wNews;
+                
+                
+                if(!pref){
+                    builder.Prompts.text(session, cob + data['qChoice'] + '\n\n' +
+                        data['1'] + ' ou ' + data['all'].toLowerCase() + '\n \n source: ' +
+                        data['source']);    
+                }else{
+                    pref = pref.toLowerCase();
+                    if(pref == 'tous'){
+                        builder.Prompts.text(session, cob + data['qChoice'] + '\n\n' +
+                        data['1'] + ' ou ' + data['all'].toLowerCase() + '\n \n source: ' +
                         data['source']);
+                    }else{
+                        builder.Prompts.text(session, cob + data['qChoice'] + '\n\n' +
+                        data['1'] + ' ' + pref + ', ' + data['allPref'].toLowerCase() 
+                         + pref + ' ou '+ data['all'].toLowerCase() 
+                         + '\n \n source: ' + data['source']);    
+                    }
+                }
+                
             }else{
                 session.send(cob + prompts.error);
             }
         },
-        function(session, results){
+        
+        function(session, results, next){
             f.debug('news2');
             if(results.response){
                 var nTitle = results.response;
@@ -149,27 +173,154 @@ module.exports = {
                 nTitle = nTitle.replace(/ /g, '').replace(/é/g,'e').replace(/è/g,'e')
                                 .toLowerCase();
                 
-                f.debug(nTitle);
+                // f.debug(nTitle);
                 
-                if(nTitle == 'laderniere' || nTitle == 'ladernierenews'){
-                    s.scraping('', function(err, t){
-                        session.send(cob + t[0]);
-                    });
-                }else if(nTitle == 'toutes'){
-                    s.scraping('', function(err, t){
-                        session.send(cob + t.join("\n *"));
-                    });
+                var wNews = session.userData.wNews;
+                var nextStep = 0;
+                
+                if(wNews){
+                    switch (wNews) {
+                        case 'sante':
+                            if(nTitle == 'laderniere' || nTitle == 'ladernierenews'){
+                                s.scraping('sante', function(err, t){
+                                    session.send(cob + t[0]);
+                                });
+                            }else if(nTitle == 'toutes'){
+                                s.scraping('sante', function(err, t){
+                                    session.send(cob + t.join("\n *"));
+                                });
+                            }else{
+                               nextStep = 1; 
+                            }
+                            break;
+                            
+                        case 'sport':
+                            if(nTitle == 'laderniere' || nTitle == 'ladernierenews'){
+                                s.scraping('sport', function(err, t){
+                                    session.send(cob + t[0]);
+                                });
+                            }else if(nTitle == 'toutes'){
+                                s.scraping('sport', function(err, t){
+                                    session.send(cob + t.join("\n *"));
+                                });
+                            }else{
+                               nextStep = 1;
+                            }
+                            break;
+                            
+                            case 'culture':
+                            if(nTitle == 'laderniere' || nTitle == 'ladernierenews'){
+                                s.scraping('culture', function(err, t){
+                                    session.send(cob + t[0]);
+                                });
+                            }else if(nTitle == 'toutes'){
+                                s.scraping('culture', function(err, t){
+                                    session.send(cob + t.join("\n *"));
+                                });
+                            }else{
+                               nextStep = 1;
+                                
+                            }
+                            break;
+                            
+                            case 'science':
+                            if(nTitle == 'laderniere' || nTitle == 'ladernierenews'){
+                                s.scraping('science', function(err, t){
+                                    session.send(cob + t[0]);
+                                });
+                            }else if(nTitle == 'toutes'){
+                                s.scraping('science', function(err, t){
+                                    session.send(cob + t.join("\n *"));
+                                });
+                            }else{
+                               nextStep = 1;
+                                
+                            }
+                            break;
+                            
+                            case 'economie':
+                            if(nTitle == 'laderniere' || nTitle == 'ladernierenews'){
+                                s.scraping('economie', function(err, t){
+                                    session.send(cob + t[0]);
+                                });
+                            }else if(nTitle == 'toutes'){
+                                s.scraping('economie', function(err, t){
+                                    session.send(cob + t.join("\n *"));
+                                });
+                            }else{
+                               nextStep = 1;
+                                
+                            }
+                            break;
+                            
+                            case 'international':
+                            if(nTitle == 'laderniere' || nTitle == 'ladernierenews'){
+                                s.scraping('international', function(err, t){
+                                    session.send(cob + t[0]);
+                                });
+                            }else if(nTitle == 'toutes'){
+                                s.scraping('international', function(err, t){
+                                    session.send(cob + t.join("\n *"));
+                                });
+                            }else{
+                               nextStep = 1;
+                                
+                            }
+                            break;
+                            
+                            case 'une':
+                            if(nTitle == 'laderniere' || nTitle == 'ladernierenews'){
+                                s.scraping('une', function(err, t){
+                                    session.send(cob + t[0]);
+                                });
+                            }else if(nTitle == 'toutes'){
+                                s.scraping('une', function(err, t){
+                                    session.send(cob + t.join("\n *"));
+                                });
+                            }else{
+                               nextStep = 1;
+                                
+                            }
+                            break;
+                            
+                        default:
+                            if(nTitle == 'laderniere' || nTitle == 'ladernierenews'){
+                                s.scraping('', function(err, t){
+                                    session.send(cob + t[0]);
+                                });
+                            }else if(nTitle == 'toutes'){
+                                s.scraping('', function(err, t){
+                                    session.send(cob + t.join("\n *"));
+                                });
+                            }
+                    }
                 }else{
-                   session.send(cob + prompts.error); 
+                    if(nTitle == 'laderniere' || nTitle == 'ladernierenews'){
+                        s.scraping('', function(err, t){
+                            session.send(cob + t[0]);
+                        });
+                    }else if(nTitle == 'toutes'){
+                        s.scraping('', function(err, t){
+                            session.send(cob + t.join("\n *"));
+                        });
+                    }else{
+                      session.send(cob + prompts.error); 
+                    }
+                }
+                
+                if(nextStep == 1){
+                    s.scraping('', function(err, t){
+                            session.send(cob + t.join("\n *"));
+                    });
                 }
             }else{
                session.send(cob + prompts.error); 
             }
-        }
-    ],
+        },
+    ]
     
     //Non implémenté même Luis
-    virement:[
-        a.question('', 1),
-    ],
+    // virement:[
+    //     a.question('', 1),
+    // ],
 };

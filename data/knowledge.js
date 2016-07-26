@@ -19,8 +19,8 @@ module.exports = {
     
     'salutation': {
         matin : 'Bonjour, tu es matinal dis donc. Ou tu te couche tard, au choix, hein',
-        midi: 'Salut ! Tu ne manges pas',
-        soir: 'Salut ! Tu passes une bonne soirée',
+        midi: 'Salut ! J\'espère que tu as mangé',
+        soir: 'Bonsoir',
         default: 'Bonjour' 
     },
     
@@ -53,6 +53,7 @@ module.exports = {
         qChoice: 'Que voulez vous ?',
         1: 'La dernière news',
         all:'Toutes les news du moments',
+        allPref: 'Toutes les news à propos de ',
         source: 'https://news.google.fr'
     },
     
@@ -65,7 +66,12 @@ module.exports = {
         wantToKnow: 'J\'aimerais mieux te connaitre !'
     },
     
+    'know':{
+        know : 'Je te connais mieux que tu crois !'
+    },
+    
     'wNews': {
-        choice : 'Tous/sport/santé/economie/News à la une'
+        choice : 'Tous/sport/santé/economie/News à la une',
+        kNews : 'Tu préfères les news '
     }
 };

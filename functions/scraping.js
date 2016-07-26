@@ -57,7 +57,7 @@
                     for(var i = 0; i<taille%28; i++){
                        cat[i] = data[i];
                     } 
-                }else if(choice == 'intenational'){
+                }else if(choice == 'international'){
                    for(var i = 6; i<6+(taille%30); i++){
                        cat[i - 6] = data[i];
                    }

@@ -85,6 +85,8 @@ var human = 'You > ';
 
 /**
  *Demande le prénom
+ *
+ * A revoir !!!!
  **/
 bot.dialog('/profile', [
    function(session){
@@ -96,23 +98,6 @@ bot.dialog('/profile', [
    }
 ]);
 /************************************************/
-
-/**
- *  Demande de wantToKnow
- **/
-// bot.dialog('/wantToKnow',[
-//     function(session){
-//         builder.Prompts.text(session, brain['dontKnow']['wantToKnow'] + 
-//                                       ' oo');
-//     },
-//     function(session, results){
-//         session.userData.type = results.response;
-//         f.debug(session.userData.type);
-//         session.endDialog();
-//     }
-// ]); a enlever
-
-
 
 
 /**
@@ -175,6 +160,13 @@ dialog.matches('remerciment', conv.remerciment);
  **/
 dialog.matches('news', conv.news);
 /************************************************/
+
+/**
+ * Description cob ou user
+ **/
+// dialog.matches('ego', conv.ego); existe sur luis met n'est pas implémenté
+/************************************************/
+
 
 /** 
  * Element concernant CGI 

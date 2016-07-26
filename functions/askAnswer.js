@@ -22,7 +22,7 @@ module.exports = {
             // session.userData.name = 'Julien';
             f.debug('Fonction question');
             var data = builder.EntityRecognizer.findEntity(args.entities,type);
-            var bestWay;;
+            var bestWay;
             //authentification nécessaire
             if(auth == 1){
                 if(!session.userData.name){
