@@ -17,23 +17,23 @@ module.exports = {
      * si auth = 1 on doit connaitre le prenom
      * si auth = 0 on s'en fiche
      **/
-    question: function(type, auth){
+    question: function(type, ident){
         return function(session, args, next){
-            // session.userData.name = 'Julien';
+            session.userData.name = 'Julien';
             f.debug('Fonction question');
             var data = builder.EntityRecognizer.findEntity(args.entities,type);
             var bestWay;
             //authentification nécessaire
-            if(auth == 1){
+            if(ident == 1){
                 if(!session.userData.name){
                     session.send(cob + connaissance['politesse']['presentation']);                    
                 }else{
-                    auth = 0;
+                    ident = 0;
                 }
             }
             
             //authentification non nécessaure
-            if(auth == 0){
+            if(ident == 0){
                 //Si on a la data
                 if(data){
                     //On essaye de trouver le meilleur résultat possible

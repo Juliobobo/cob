@@ -317,10 +317,53 @@ module.exports = {
                session.send(cob + prompts.error); 
             }
         },
-    ]
+    ], 
     
-    //Non implémenté même Luis
-    // virement:[
-    //     a.question('', 1),
-    // ],
+    makeMoneyTransfert:[
+        a.question('action', 1),
+        
+        //Fonction authentification
+        // Google authentificator
+        
+        // Traitement
+        function(session, results){
+            f.debug('Effectuer un virement');
+            f.debug(results);
+            
+            if(results.response){
+                var data = results.response;
+                
+                
+                
+            }
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+        }
+        
+    ]
 };

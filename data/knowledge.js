@@ -7,7 +7,8 @@
  * On stocke ici les données du robot
  */
 
-module.exports = {
+module.exports = { 
+  // Description d'entreprise
   'cgi': {
         description: 'Groupe CGI est un groupe canadien actif dans le domaine des services en technologies de l\'information et de la communication et en gestion des processus d\'affaires.' ,
         fondateur: 'Michael E. Roach',
@@ -16,7 +17,9 @@ module.exports = {
         activité: 'Finance ...',
         solution: 'Pleins'
     },
+    //---------------------------------------//
     
+    // Paroles de bases
     'salutation': {
         matin : 'Bonjour, tu es matinal dis donc. Ou tu te couche tard, au choix, hein',
         midi: 'Salut ! J\'espère que tu as mangé',
@@ -44,11 +47,19 @@ module.exports = {
         
     },
     
+    'politesse': {
+        presentation: 'Quand on est poli on dit bonjour !'
+    },
+    //---------------------------------------//
+    
+    // Name
     'ton':{},
     'tu':{},
     'mon':{},
     'je':{},
+    //---------------------------------------//
     
+    // News
     'news':{
         qChoice: 'Que voulez vous ?',
         1: 'La dernière news',
@@ -56,10 +67,15 @@ module.exports = {
         allPref: 'Toutes les news à propos de ',
         source: 'https://news.google.fr'
     },
+    //---------------------------------------//
     
-    'politesse': {
-        presentation: 'Quand on est poli on dit bonjour !'
+    // Virement
+    
+    // make
+    virement: {
+        
     },
+    //---------------------------------------//
     
     //Connaissance pour la fonction wanToKnow
     'dontKnow': {
@@ -74,4 +90,5 @@ module.exports = {
         choice : 'Tous/sport/santé/economie/News à la une',
         kNews : 'Tu préfères les news '
     }
+    //---------------------------------------//
 };

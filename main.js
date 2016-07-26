@@ -167,6 +167,18 @@ dialog.matches('news', conv.news);
 // dialog.matches('ego', conv.ego); existe sur luis met n'est pas implémenté
 /************************************************/
 
+/**
+ * Effectuer un virement 
+ **/
+dialog.matches('makeMoneyTransfert', conv.makeMoneyTransfert); 
+/************************************************/
+
+/**
+ * Voir ces virements 
+ **/
+// dialog.matches('accessMoneyTransfert', conv.accessMoneyTransfert); 
+/************************************************/
+
 
 /** 
  * Element concernant CGI 
