@@ -8,10 +8,12 @@
 var builder = require('botbuilder');
 var f = require('./functions/usefulFunction');
 var connaissance = require('./data/knowledge');
+var bdd = require("./data/bdd");
 var prompts = require('./data/prompts');
 var a = require('./functions/askAnswer');
 var s = require("./functions/scraping");
-var w = require("./functions/wantToKnow")
+var w = require("./functions/wantToKnow");
+var auth = require("./functions/auth");
 
 var cob = 'cob > ';
 
@@ -323,47 +325,100 @@ module.exports = {
         a.question('action', 1),
         
         //Fonction authentification
-        // Google authentificator
+        auth.auth(),
+        auth.checkingPassword(),
         
         // Traitement
         function(session, results){
             f.debug('Effectuer un virement');
-            f.debug(results);
+            // f.debug(results);
+            
+            session.send(cob + 'Bienvenue %s dans l\'espace "Effectuer un virement"', session.userData.name);
             
             if(results.response){
                 var data = results.response;
+                f.debug(data);
                 
+                //Who
+                builder.Prompts.choice(session, cob + connaissance[data.entity]['who'], bdd['destinataire']);
                 
+                // A TROUVER : CHANGER LE I DIDN'T UNDERSTAND QUAND IL Y A UNE ERREUR
+                // MODIFIER LES PROMPTS
                 
+            }else{
+              session.send(cob + prompts.error); 
             }
+        },
+        function(session, results){
+            // f.debug(results);
             
+            if(results.response){
+                
+                var infoDest = bdd['destinataire'][results.response.entity];
+                
+                
+                session.send(cob + 'Titulaire: %(titulaire)s \n '
+                                   + 'Domiciliation: %(domiciliation)s \n'
+                                   + 'Référence Bancaire: %(refBancaire)s \n'
+                                   + 'IBAN: %(IBAN)s \n'
+                                   + 'BIC: %(BIC)s \n'
+                                   + 'Banque: %(banque)s' , infoDest );
+                
+                //On enregistre le result
+                session.dialogData.transfertWho = results.response;
+                
+                //Results venant de LUIS 
+                var data = session.dialogData.tmpPw.response;
+                f.debug(data);
+                
+                //How
+                builder.Prompts.number(session, cob + connaissance[data.entity]['how']);
+                
+            }else{
+                session.send(cob + prompts.error);
+            }
+        },
+        function(session, results){
+            // f.debug(results);
             
+            if(results.response){
+                //On enregistre le result
+                session.dialogData.transfertHow = results.response;
+                
+                //Results venant de LUIS 
+                var data = session.dialogData.tmpPw.response;
+                
+                //How
+                builder.Prompts.text(session, cob + connaissance[data.entity]['when']
+                + ' jj/mm/aaaa');
+                
+            }else{
+                session.send(cob + prompts.error);
+            }
+        },
+        function(session, results){
+            //On recapitule
+            // f.debug(results);
             
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-        }
+            if(results.response){
+                //On enregistre le result
+                session.dialogData.transfertWhen = results.response;
+                
+                f.debug(session.dialogData);
+                session.send(cob + 'Récapitulatif : \n'
+                                    + '%s \n'
+                                    + '%s€ \n'
+                                    + '%s', session.dialogData.transfertWho.entity,
+                                            session.dialogData.transfertHow,
+                                            session.dialogData.transfertWhen);
+                
+                builder.Prompts.text(session, 'Confirmation, tapez votre mot de passe de session !');
+            }else{
+                session.send(cob + prompts.error);
+            }
+        },
+        
+        auth.checkingPassword()
         
     ]
 };

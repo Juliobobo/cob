@@ -72,8 +72,10 @@ module.exports = {
     // Virement
     
     // make
-    virement: {
-        
+    'virement': {
+        who : 'Le destinataire ?',
+        how : 'Le montant ?',
+        when : 'Quand ?'
     },
     //---------------------------------------//
     

@@ -3,7 +3,7 @@
  **/
  var builder = require('botbuilder');
  var brain = require("../data/knowledge");
- var f = require("../functions/usefulFunction")
+ var f = require("../functions/usefulFunction");
  
  var cob = 'cob > ';
  
