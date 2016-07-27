@@ -19,7 +19,7 @@ module.exports = {
      **/
     question: function(type, ident){
         return function(session, args, next){
-            session.userData.name = 'Julien';
+            // session.userData.name = 'Julien';
             f.debug('Fonction question');
             var data = builder.EntityRecognizer.findEntity(args.entities,type);
             var bestWay;
