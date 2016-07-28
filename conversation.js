@@ -326,7 +326,7 @@ module.exports = {
         
         //Fonction authentification
         auth.auth(),
-        auth.checkingPassword(),
+        auth.checkingPassword(1),
         
         // Traitement
         function(session, results){
@@ -337,7 +337,6 @@ module.exports = {
             
             if(results.response){
                 var data = results.response;
-                f.debug(data);
                 
                 //Who
                 builder.Prompts.choice(session, cob + connaissance[data.entity]['who'], bdd['destinataire']);
@@ -369,7 +368,6 @@ module.exports = {
                 
                 //Results venant de LUIS 
                 var data = session.dialogData.tmpPw.response;
-                f.debug(data);
                 
                 //How
                 builder.Prompts.number(session, cob + connaissance[data.entity]['how']);
@@ -404,7 +402,7 @@ module.exports = {
                 //On enregistre le result
                 session.dialogData.transfertWhen = results.response;
                 
-                f.debug(session.dialogData);
+                // f.debug(session.dialogData);
                 session.send(cob + 'Récapitulatif : \n'
                                     + '%s \n'
                                     + '%s€ \n'
@@ -418,7 +416,16 @@ module.exports = {
             }
         },
         
-        auth.checkingPassword()
+        //Il faut securiser en envoyer un code a FS4U
+        auth.checkingPassword(0),
+        
+        function(session, results){
+            if(results.response){
+                session.send(cob + "Transaction effectuée !");
+            }else{
+                session.send(cob + "Transaction annulée, veuillez recommencer l'opération !");
+            }
+        }
         
     ]
 };

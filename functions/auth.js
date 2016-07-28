@@ -18,15 +18,6 @@
             var formattedKey = auth.generateKey();
             var formattedToken = auth.generateToken(formattedKey); //Code 6 digits
             
-            // auth.verifyToken(formattedKey, formattedToken);
-            // f.debug(auth.verifyToken(formattedKey, formattedToken));
-            // f.debug(formattedKey);
-            
-            //Le code généré
-            // f.debug(formattedToken);
-            
-            // f.debug(results);
-            
             //Sauvegarde temporaire du results
             session.dialogData.tmpPw = results;
             
@@ -34,7 +25,7 @@
             var pw = session.dialogData.pw = formattedToken;
             
             //cob donne le mot de passe à l'utilisateur
-            session.send(cob + 'Votre mot de passe de session: ' + formattedToken);
+            session.send(cob + 'Votre mot de passe de session: ' + formattedToken + ' (Retenez le pendant l\'opération)');
             
             if(pw){
                builder.Prompts.text(session, cob + 'Quel est votre mot de passe de session ?'); 
@@ -46,7 +37,12 @@
         };
     },
     
-    checkingPassword : function(){
+    /**
+     * Si x = 0, utilisation de la fonction seule
+     * Si x = 1, utilisation avec auth
+     */
+    
+    checkingPassword : function(x){
         return function(session, results, next){
             f.debug('checkPw');
             
@@ -56,13 +52,19 @@
             //Verification que pwUser = nombre
             if(!isNaN(pwUser)){
                 // Verification pw
-                if(pwUser == pwGen){
+                if(pwUser == pwGen && x == 1){
                     next(session.dialogData.tmpPw);
+                }else if(x == 0){
+                    if(pwUser == pwGen){
+                        next({response : true});
+                    }else{
+                        next({response : false});   
+                    }
                 }else{
-                    session.send(cob + 'Mauvais password ! recommencer votre demande');
+                    session.send(cob + 'Mauvais password !');
                 }
             }else{
-               session.send(cob + 'Mauvais password ! recommencer votre demande'); 
+               session.send(cob + 'Mauvais password !'); 
             }
         };
     }
