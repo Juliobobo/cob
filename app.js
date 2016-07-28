@@ -17,10 +17,9 @@ var fs = require("fs");
 // Bot Setup
 //=========================================================
 
-/**
- * Tentative de chat html / nodejs 
- **/
-// DrjiLpupErtsdqSYDgcMTVx
+// appID : ac71f72c-2c77-40f4-af7b-c4931f8110ed
+// appPassword : DrjiLpupErtsdqSYDgcMTVx
+
 //=========================================================
 
 // Setup Restify Server
@@ -42,26 +41,6 @@ var connector = new builder.ChatConnector({
 });
 var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
-
-/**
- * Code d'alban
- * N'est plus fonctionnel
- **/
-
-//var connector = new builder.ChatConnector({
-//   appId: 'cob',
-//   appPassword: 'cgi'
-//});
-//
-//var bot = new builder.UniversalBot(connector);
-//
-//// Setup Restify Server
-//var server = restify.createServer();
-//server.post('/api/messages', connector.listen());
-//server.listen(process.env.port || 3978, function () {
-//    console.log('%s listening to %s', server.name, server.url); 
-//});
-//
 
 /**
  * Mode console
