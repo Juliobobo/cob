@@ -23,31 +23,31 @@ var fs = require("fs");
 //=========================================================
 
 // Setup Restify Server
-// var server = restify.createServer({
-//   certificate: fs.readFileSync("https/server.crt.pem"),
-//   key: fs.readFileSync("https/server.key.pem"),
-//   name: "cob",
-// });
-// server.listen(10443, function()
-// {
-// 	console.log('%s listening to %s', server.name, server.url); 
-// });
+var server = restify.createServer({
+  certificate: fs.readFileSync("https/server.crt.pem"),
+  key: fs.readFileSync("https/server.key.pem"),
+  name: "cob",
+});
 
+server.listen(10443, function(){
+	console.log('%s listening to %s', server.name, server.url); 
+});
 
-// // Create chat bot
-// var connector = new builder.ChatConnector({
-// 	appId: "ac71f72c-2c77-40f4-af7b-c4931f8110ed",
-// 	appPassword: "DrjiLpupErtsdqSYDgcMTVx"
-// });
-// var bot = new builder.UniversalBot(connector);
-// server.post('/api/messages', connector.listen());
+// Create chat bot
+var connector = new builder.ChatConnector({
+	appId: "ac71f72c-2c77-40f4-af7b-c4931f8110ed",
+	appPassword: "DrjiLpupErtsdqSYDgcMTVx"
+});
+
+var bot = new builder.UniversalBot(connector);
+server.post('/api/messages', connector.listen());
 
 /**
  * Mode console
  **/
 //Je me connecte en mode console
-var connector = new builder.ConsoleConnector().listen();
-var bot = new builder.UniversalBot(connector);
+// var connector = new builder.ConsoleConnector().listen();
+// var bot = new builder.UniversalBot(connector);
 
 //=========================================================
 

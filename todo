@@ -1,0 +1,120 @@
+*****************
+*    Général    *
+*****************
+
+//Pour exporter
+var direBonjour = function() {
+    console.log('Bonjour !');
+}
+
+var direByeBye = function() {
+    console.log('Bye bye !');
+}
+
+exports.direBonjour = direBonjour;
+exports.direByeBye = direByeBye;
+
+ou 
+
+exports.direBonjour = function() { ... };
+
+---> Revoir chaques fichier pour factoriser le code et apporter de la proprété
+
+
+**********************
+*    Implémentées    *
+**********************
+
+1/ Ce que COB comprend (LUIS)
+
+- Salutation
+    "Bonjour", "Yo", "Yop", "Coucou", "wesh", "hello", "salut", ...
+
+- Demande de nom
+    "Comment je m'appelle ?", "Comment tu t'appelles ?", "Quel est mon nom/prénom", "Quel est ton nom/prénom"
+    Rq: Il ne fait pas la distinction entre nom et prénom
+
+- Sante
+    "La forme ?", "Comment tu vas ?", "Comment vas tu ?", "Ca/ça va bien ?"
+    Rq: il répond et renvoi et toi ? Il ne comprendra pas la réponse comme ca va bien.
+
+- Remerciment
+    "Merci", "Merci beaucoup", ...
+    Rq: Certaine tournure comme "Merci milles fois" il ne les comprend pas
+
+- News
+    "Quelles sont les news ?", "Quelles sont les infos ?", "Quelles sont les informations ?"
+
+- Virement
+    "Je peux faire un virement", "Puis je faire un virement ?", "Est ce que je peux faire un virement ?"
+    
+- Description d'une entreprise, ici cgi
+    "Connais tu cgi ?", "Tu connais cgi ?", "qu'est ce que cgi ?", "cgi ?"
+    "Qui a fondé cgi ?", "Qui est le fondateur de cgi ?", "le fondateur de cgi ?"
+    "Ou se trouve cgi ?", "Ou est cgi ?"
+    "Comment puis je contacter cgi ?", "ou contacter cgi ?", "comment contacter cgi ?", "Comment je prend contact avec cgi ?"
+    "Quelles solutions propose cgi ?", "Quelles sont les solutions de cgi ? "
+
+
+********************************
+*    Fonctionnalités de cob    *
+********************************
+
+- Système d'identification (à améliorer)
+- Système d'authentication avec password vivant
+- Système d'apprentissage sur l'utilisateur (préférence).
+- Système de récupération d'info (google news)
+- Système d'aide (désactivé et à refaire)
+- Système de virement (à paufiner)
+
+
+*************************
+*    NON mplémentées    *
+*************************
+
+- Reconnaissance vocale : STT & TTS
+- Envoi de confirmation sur FS4U (virement)
+- Ego (existe sur luis qui est tu ? / qui suis je ?)
+- accessMoneyTransfert (voir ces virements)
+
+
+******************************
+*    Amélioration à faire    *
+******************************
+
+- Verification du nom 
+- Verification date
+
+
+******************************
+*    Problèmes à résoudre    *
+******************************
+
+- Le bot me connait toujours quand on rafraichit la page par exemple ??
+
+
+******************
+*    Scénario    *
+******************
+
+1/ Assurance
+
+c-	Bonjour en quoi puis-je vous aider ? ---> salutation + que puis je faire pour vous OK !
+-	Salut, je suis en panne ---> Luis "Je suis en panne" // Panne = entities --> Lance l'acion 
+
+c-	Très bien, pouvez-vous m’indiquer votre identité ? ---> identification (ok mais faut la réecrire)
+-	Paul ---> session.userData.name
+c-	Mais Paul Comment ? C’est que nous avons plusieurs clients Paul à la Paris Assurance !
+    --> On check si on connait le nom de famille si oui ok sinon !
+    --> ident = function(type){...} avec type nom ou prenom
+    
+-	Paul Durant
+c-	Merci Paul, pouvez-vous vous identifier ci-dessous avec votre code d’accès/mot de passe ? 
+    --> authentification OK ! A tester
+    
+c-	Parfait, Je vous géo-localise ici (Utilisation API géo localisation)
+    --> ??? Reponse : vous êtes à .... ???
+
+- Confirmation de la personne, adresse correcte / autre adresse
+
+On verra la suite.....

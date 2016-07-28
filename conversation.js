@@ -416,7 +416,7 @@ module.exports = {
             }
         },
         
-        //Il faut securiser en envoyer un code a FS4U
+        //Il faut securiser en envoyer un code a FS4U en attente de la rep d'ugo
         auth.checkingPassword(0),
         
         function(session, results){
