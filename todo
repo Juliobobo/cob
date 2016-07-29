@@ -60,7 +60,7 @@ exports.direBonjour = function() { ... };
 *    Fonctionnalités de cob    *
 ********************************
 
-- Système d'identification (à améliorer)
+- Système d'identification (à améliorer) ---> OK !
 - Système d'authentication avec password vivant
 - Système d'apprentissage sur l'utilisateur (préférence).
 - Système de récupération d'info (google news)
@@ -82,7 +82,7 @@ exports.direBonjour = function() { ... };
 *    Amélioration à faire    *
 ******************************
 
-- Verification du nom 
+- Verification du nom (leger traitement done)
 - Verification date
 
 
@@ -106,7 +106,7 @@ c-	Très bien, pouvez-vous m’indiquer votre identité ? ---> identification (o
 -	Paul ---> session.userData.name
 c-	Mais Paul Comment ? C’est que nous avons plusieurs clients Paul à la Paris Assurance !
     --> On check si on connait le nom de famille si oui ok sinon !
-    --> ident = function(type){...} avec type nom ou prenom
+    --> ident = function(type){...} avec type nom ou prenom -------------> ok
     
 -	Paul Durant
 c-	Merci Paul, pouvez-vous vous identifier ci-dessous avec votre code d’accès/mot de passe ? 

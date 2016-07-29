@@ -14,14 +14,18 @@ var a = require('./functions/askAnswer');
 var s = require("./functions/scraping");
 var w = require("./functions/wantToKnow");
 var auth = require("./functions/auth");
+var ident = require("./functions/ident");
 
 var cob = 'cob > ';
 
 module.exports = {
     salutation :[
 //        a.question('salutation'),
+        ident.ident(1),
+        ident.treatmentName(),
+        ident.treatmentSurname(),
         function(session, args, next){
-                console.log('Authentification');
+                console.log('identification');
                 // session.userData.name;
                 
                 /**
@@ -40,7 +44,7 @@ module.exports = {
         //reponse avec traitement
         function(session, results){
             f.debug('Salutation');
-    
+
             var classe = 'salutation';
             var date = new Date();
             var heure = date.getHours();
