@@ -39,8 +39,8 @@ var connector = new builder.ChatConnector({
 	appPassword: "DrjiLpupErtsdqSYDgcMTVx"
 });
 
-// var bot = new builder.UniversalBot(connector);
-// server.post('/api/messages', connector.listen());
+var bot = new builder.UniversalBot(connector);
+server.post('/api/messages', connector.listen());
 
 /**
  * Mode console
