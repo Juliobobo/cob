@@ -43,5 +43,28 @@
              BIC : 'SOGEFRPP',
              banque: 'Société Général'
          },
+     },
+     
+     location : {
+         'current': {
+             lat: 45.193409,
+             long : 5.768293999999969
+         }
+     },
+     
+     //Assurance
+     assure : {
+         1: {
+             name: 'paul',
+             surname: 'durant',
+             depannage: true,
+         },
+         
+         2: {
+             name: 'julien',
+             surname: 'bonnardel',
+             depannage: false,
+         }
+         
      }
  }

@@ -8,10 +8,11 @@ var builder = require('botbuilder');
 var restify = require('restify');
 var prompts = require('./data/prompts');
 var f = require('./functions/usefulFunction');
-var conv = require('./conversation');
+var conv = require('./speech/conversation');
 var a = require('./functions/askAnswer');
 var brain = require("./data/knowledge");
 var fs = require("fs");
+var ass = require("./speech/assurance");
 
 //=========================================================
 // Bot Setup
@@ -71,17 +72,17 @@ var human = 'You > ';
 /**
  *Demande le prénom
  *
- * A revoir !!!!
+ * A enlever !!
  **/
-bot.dialog('/profile', [
-   function(session){
-       builder.Prompts.text(session, cob + 'Bonjour! Comment vous appelez-vous ?');
-   },
-   function(session, results){
-       session.userData.name = results.response;
-       session.endDialog();
-   }
-]);
+// bot.dialog('/profile', [
+//   function(session){
+//       builder.Prompts.text(session, cob + 'Bonjour! Comment vous appelez-vous ?');
+//   },
+//   function(session, results){
+//       session.userData.name = results.response;
+//       session.endDialog();
+//   }
+// ]);
 /************************************************/
 
 
@@ -125,7 +126,7 @@ dialog.onDefault(builder.DialogAction.send(cob + prompts.accueil));
  * On essaie de crée un bot qui parle de tout et n'importe quoi
  **/
 dialog.matches('salutation', conv.salutation);
-dialog.matches('sante', conv.sante);
+// dialog.matches('sante', conv.sante); ----> Bug dans Luis
 //dialog.matches('none', conv.none); car default qui 
 
 /**
@@ -153,6 +154,12 @@ dialog.matches('news', conv.news);
 /************************************************/
 
 /**
+ * Assurance 
+ **/
+dialog.matches('event', ass.assurance); 
+/************************************************/
+
+/**
  * Effectuer un virement 
  **/
 dialog.matches('makeMoneyTransfert', conv.makeMoneyTransfert); 
@@ -166,24 +173,24 @@ dialog.matches('makeMoneyTransfert', conv.makeMoneyTransfert);
 
 
 /** 
- * Element concernant CGI 
+ * Element concernant CGI --> check luis 
  **/
 
-var cgi = 'nomEntreprise';
+// var cgi = 'nomEntreprise';
 
-//description CGI
-dialog.matches('description', [a.question(cgi, 0), a.reponse('description')]);
+// //description CGI
+// dialog.matches('description', [a.question(cgi), a.reponse('description')]);
 
-//fondateur CGI
-dialog.matches('fondateur', [a.question(cgi, 0), a.reponse('fondateur')]);
+// //fondateur CGI
+// dialog.matches('fondateur', [a.question(cgi), a.reponse('fondateur')]);
 
-//localisation CGI
-dialog.matches('localisation', [a.question(cgi, 0), a.reponse('localisation')]);
+// //localisation CGI
+// dialog.matches('localisation', [a.question(cgi), a.reponse('localisation')]);
 
-//website CGI -- contact
-dialog.matches('contact', [a.question(cgi, 0), a.reponse('website')]);
+// //website CGI -- contact
+// dialog.matches('contact', [a.question(cgi), a.reponse('website')]);
 
-//solution CGI
-dialog.matches('solution', [a.question(cgi, 0), a.reponse('solution')]);
+// //solution CGI
+// dialog.matches('solution', [a.question(cgi), a.reponse('solution')]);
 /************************************************/
 

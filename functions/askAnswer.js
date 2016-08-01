@@ -17,39 +17,26 @@ module.exports = {
      * si auth = 1 on doit connaitre le prenom
      * si auth = 0 on s'en fiche
      **/
-    question: function(type, ident){
+    question: function(type){
         return function(session, args, next){
             // session.userData.name = 'Julien';
             f.debug('Fonction question');
             var data = builder.EntityRecognizer.findEntity(args.entities,type);
             var bestWay;
-            //authentification nécessaire
-            if(ident == 1){
-                if(!session.userData.name){
-                    session.send(cob + connaissance['politesse']['presentation']);                    
-                }else{
-                    ident = 0;
-                }
+            //Si on a la data
+            if(data){
+                //On essaye de trouver le meilleur résultat possible
+                bestWay = builder.EntityRecognizer.findBestMatch(connaissance, data.entity);
+            }else if(session.dialogData.bestWay){
+                bestWay = session.dialogData.bestWay;
             }
-            
-            //authentification non nécessaure
-            if(ident == 0){
-                //Si on a la data
-                if(data){
-                    //On essaye de trouver le meilleur résultat possible
-                    bestWay = builder.EntityRecognizer.findBestMatch(connaissance, data.entity);
-                }else if(session.dialogData.bestWay){
-                    bestWay = session.dialogData.bestWay;
-                }
 
-                if(!bestWay){
-                    next({response: connaissance[args.intent]});
-                }else{
-                    next({response: bestWay});
-                }
+            if(!bestWay){
+                next({response: connaissance[args.intent]});
             }else{
-//                session.send(cob + prompts.error);
+                next({response: bestWay});
             }
+        
         };
     }, 
 

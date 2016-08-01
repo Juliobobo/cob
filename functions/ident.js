@@ -67,7 +67,7 @@
             next();
         }
        }else{
-          session.send(cob + prompts.error);
+          session.send(cob + prompts.error); //le no n'est pas traité
        }
      };
  }
