@@ -60,7 +60,7 @@ exports.direBonjour = function() { ... };
 *    Fonctionnalités de cob    *
 ********************************
 
-- Système d'identification (à améliorer) ---> OK !
+- Système d'identification avec changement de prénom et nom ! (à faire : fonction reset userData);
 - Système d'authentication avec password vivant
 - Système d'apprentissage sur l'utilisateur (préférence).
 - Système de récupération d'info (google news)

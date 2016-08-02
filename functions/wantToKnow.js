@@ -28,7 +28,7 @@
       wantToKnow : function(type){
         return function(session, results, next){
            
-           f.debug('wantToKnow');
+           // f.debug('wantToKnow');
            
            //Sauvegarde de la question initiale dans une variable de session: tmp
            session.dialogData.tmp = results;

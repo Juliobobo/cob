@@ -13,20 +13,23 @@ module.exports = {
     assurance : [
         //Identification
         ident.ident(1),
-        ident.treatmentName(),
-        ident.treatmentSurname(),
+        ident.treatmentOne(),
+        ident.treatmentTwo(),
+        ident.treatmentThree(),
+        ident.treatmentFour(),
         
         //authentification
-        auth.auth(),
+        // auth.auth(),
         // auth.checkingPassword(1),
         
         //Geolocalisation
-        geolocation.geolocation(), 
+        // geolocation.geolocation(), 
         
         function(session, results, next){
-            f.debug('assurance');
+            session.send(cob + "Bienvenue "+ session.userData.name 
+                                        +  ' ' + session.userData.surname + " !");
             if(results.response){
-                f.debug('true');
+                // f.debug('true');
                session.dialogData.assurance = 0;
                next();
             }else{

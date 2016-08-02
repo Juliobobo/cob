@@ -25,24 +25,24 @@ module.exports = {
         // ident.treatmentName(),
         // ident.treatmentSurname(),
         function(session, args, next){
-                console.log('identification');
-                // session.userData.name;
+                // console.log('identification');
+                // session.dialogData.name;
                 
                 /**
                  * Mise en place des compteur
                  **/
                  //News
-                 session.userData.checkNews = 0;
+                 session.dialogData.checkNews = 0;
                  
                  next();
             },
         
         //reponse avec traitement
         function(session, results){
-            f.debug('Salutation');
+            // f.debug('Salutation');
             
             
-            if(!session.userData.name){
+            if(!session.dialogData.name){
                 session.send(cob + 'Bonjour, ' + prompts.accueil.toLowerCase());    
             }else{
                 var classe = 'salutation';
@@ -50,7 +50,7 @@ module.exports = {
                 var heure = date.getHours();
                 
                 //traitement du prénom à améliorer avec une vraie fonction de traitement
-                var userName = session.userData.name;
+                var userName = session.dialogData.name;
                 //On le met en minuscule
                 userName = userName.toLowerCase().replace();;
                 //On enleve les caractères ?, ,, /, ...
@@ -79,7 +79,7 @@ module.exports = {
     remerciment:[
         a.question(''),
         function(session, results){
-            f.debug('Remerciment');
+            // f.debug('Remerciment');
             if(results.response){
                  var r = f.rand(1,4);
                 session.send(cob + results.response[r] );
@@ -91,17 +91,17 @@ module.exports = {
     name: [
         a.question('pronom'),
         function(session, results){
-            f.debug('name');            
+            // f.debug('name');            
             if(results.response){
                 var data = results.response;
                 
                 if(data.entity == 'mon' || data.entity == 'je'){
-                    if(!session.userData.name){
-                        f.debug('Pas implémenté');
+                    if(!session.dialogData.name){
+                        // f.debug('Pas implémenté');
                         session.send(cob + 'Je ne sais pas');
 //                        session.beginDialog('/profile');
                     }else{
-                        session.send(cob + 'Tu t\'appelles %s !', session.userData.name);
+                        session.send(cob + 'Tu t\'appelles %s !', session.dialogData.name);
                     }
                 }
                 if(data.entity == 'ton' || data.entity == 'tu'){
@@ -117,7 +117,7 @@ module.exports = {
     sante:[
         a.question(''),
         function(session, results){
-            f.debug('sante');
+            // f.debug('sante');
             if (results.response){
                 var r = f.rand(1, 3);
                 session.send(cob + results.response[r] + ' Et toi ?' );
@@ -147,7 +147,7 @@ module.exports = {
                 
                 var data = results.response;
                 
-                var pref = session.userData.wNews;
+                var pref = session.dialogData.wNews;
                 
                 
                 if(!pref){
@@ -174,7 +174,7 @@ module.exports = {
         },
         
         function(session, results, next){
-            f.debug('news2');
+            // f.debug('news2');
             if(results.response){
                 var nTitle = results.response;
                 
@@ -183,7 +183,7 @@ module.exports = {
                 
                 // f.debug(nTitle);
                 
-                var wNews = session.userData.wNews;
+                var wNews = session.dialogData.wNews;
                 var nextStep = 0;
                 
                 if(wNews){
@@ -325,113 +325,5 @@ module.exports = {
                session.send(cob + prompts.error); 
             }
         },
-    ], 
-    
-    makeMoneyTransfert:[
-        a.question('action'),
-        
-        //Fonction authentification
-        auth.auth(),
-        auth.checkingPassword(1),
-        
-        // Traitement
-        function(session, results){
-            f.debug('Effectuer un virement');
-            // f.debug(results);
-            
-            session.send(cob + 'Bienvenue %s dans l\'espace "Effectuer un virement"', session.userData.name);
-            
-            if(results.response){
-                var data = results.response;
-                
-                //Who
-                builder.Prompts.choice(session, cob + connaissance[data.entity]['who'], bdd['destinataire']);
-                
-                // A TROUVER : CHANGER LE I DIDN'T UNDERSTAND QUAND IL Y A UNE ERREUR
-                // MODIFIER LES PROMPTS
-                
-            }else{
-              session.send(cob + prompts.error); 
-            }
-        },
-        function(session, results){
-            // f.debug(results);
-            
-            if(results.response){
-                
-                var infoDest = bdd['destinataire'][results.response.entity];
-                
-                
-                session.send(cob + 'Titulaire: %(titulaire)s \n '
-                                   + 'Domiciliation: %(domiciliation)s \n'
-                                   + 'Référence Bancaire: %(refBancaire)s \n'
-                                   + 'IBAN: %(IBAN)s \n'
-                                   + 'BIC: %(BIC)s \n'
-                                   + 'Banque: %(banque)s' , infoDest );
-                
-                //On enregistre le result
-                session.dialogData.transfertWho = results.response;
-                
-                //Results venant de LUIS 
-                var data = session.dialogData.tmpPw.response;
-                
-                //How
-                builder.Prompts.number(session, cob + connaissance[data.entity]['how']);
-                
-            }else{
-                session.send(cob + prompts.error);
-            }
-        },
-        function(session, results){
-            // f.debug(results);
-            
-            if(results.response){
-                //On enregistre le result
-                session.dialogData.transfertHow = results.response;
-                
-                //Results venant de LUIS 
-                var data = session.dialogData.tmpPw.response;
-                
-                //How
-                builder.Prompts.text(session, cob + connaissance[data.entity]['when']
-                + ' jj/mm/aaaa');
-                
-            }else{
-                session.send(cob + prompts.error);
-            }
-        },
-        function(session, results){
-            //On recapitule
-            // f.debug(results);
-            
-            if(results.response){
-                //On enregistre le result
-                session.dialogData.transfertWhen = results.response;
-                
-                // f.debug(session.dialogData);
-                session.send(cob + 'Récapitulatif : \n'
-                                    + '%s \n'
-                                    + '%s€ \n'
-                                    + '%s', session.dialogData.transfertWho.entity,
-                                            session.dialogData.transfertHow,
-                                            session.dialogData.transfertWhen);
-                
-                builder.Prompts.text(session, 'Confirmation, tapez votre mot de passe de session !');
-            }else{
-                session.send(cob + prompts.error);
-            }
-        },
-        
-        //Il faut securiser en envoyer un code a FS4U en attente de la rep d'ugo
-        auth.checkingPassword(0),
-        
-        function(session, results){
-            if(results.response){
-                session.send(cob + "Transaction effectuée !");
-            }else{
-                session.send(cob + "Transaction annulée, veuillez recommencer l'opération !");
-            }
-        }
-        
-    ],
+    ]
 };

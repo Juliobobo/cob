@@ -13,6 +13,7 @@ var a = require('./functions/askAnswer');
 var brain = require("./data/knowledge");
 var fs = require("fs");
 var ass = require("./speech/assurance");
+var bank = require("./speech/banque");
 
 //=========================================================
 // Bot Setup
@@ -68,23 +69,6 @@ var cob = 'cob > ';
 var human = 'You > ';
 
 //console.log(cob + 'Bonjour !');
-
-/**
- *Demande le prénom
- *
- * A enlever !!
- **/
-// bot.dialog('/profile', [
-//   function(session){
-//       builder.Prompts.text(session, cob + 'Bonjour! Comment vous appelez-vous ?');
-//   },
-//   function(session, results){
-//       session.userData.name = results.response;
-//       session.endDialog();
-//   }
-// ]);
-/************************************************/
-
 
 /**
  * Point d'entrée de la conversation 
@@ -162,7 +146,7 @@ dialog.matches('event', ass.assurance);
 /**
  * Effectuer un virement 
  **/
-dialog.matches('makeMoneyTransfert', conv.makeMoneyTransfert); 
+dialog.matches('makeMoneyTransfert', bank.makeMoneyTransfert); 
 /************************************************/
 
 /**

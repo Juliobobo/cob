@@ -34,7 +34,7 @@ var password = function(){
     //fonction auth en donnant le password par le chat
     auth: function(){
         return function(session, results, next){
-            f.debug('auth');
+            // f.debug('auth');
             
             //Sauvegarde temporaire du results
             // session.dialogData.tmpPw = results;
@@ -62,7 +62,7 @@ var password = function(){
     
     checkingPassword : function(x){
         return function(session, results, next){
-            f.debug('checkPw');
+            // f.debug('checkPw');
             
             var pwUser = results.response;
             var pwGen = session.dialogData.pw;
