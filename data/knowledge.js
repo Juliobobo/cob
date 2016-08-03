@@ -69,14 +69,23 @@ module.exports = {
     },
     //---------------------------------------//
     
-    // Virement
+    // banque
     
-    // make
+    // virement
     'virement': {
         who : 'Le destinataire ?',
         how : 'Le montant ?',
         when : 'Quand ?'
     },
+    
+    //consultation compte
+    'compte':{
+        
+    },
+    'comptes':{
+        
+    },
+    
     //---------------------------------------//
     
     //Connaissance pour la fonction wanToKnow

@@ -96,12 +96,12 @@ module.exports = {
                 var data = results.response;
                 
                 if(data.entity == 'mon' || data.entity == 'je'){
-                    if(!session.dialogData.name){
+                    if(!session.userData.name){
                         // f.debug('Pas implémenté');
                         session.send(cob + 'Je ne sais pas');
 //                        session.beginDialog('/profile');
                     }else{
-                        session.send(cob + 'Tu t\'appelles %s !', session.dialogData.name);
+                        session.send(cob + 'Tu t\'appelles %s !', session.userData.name);
                     }
                 }
                 if(data.entity == 'ton' || data.entity == 'tu'){
@@ -147,7 +147,7 @@ module.exports = {
                 
                 var data = results.response;
                 
-                var pref = session.dialogData.wNews;
+                var pref = session.userData.wNews;
                 
                 
                 if(!pref){
@@ -183,7 +183,7 @@ module.exports = {
                 
                 // f.debug(nTitle);
                 
-                var wNews = session.dialogData.wNews;
+                var wNews = session.userData.wNews;
                 var nextStep = 0;
                 
                 if(wNews){

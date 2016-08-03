@@ -36,6 +36,8 @@ module.exports = {
                 session.dialogData.assurance = 1;
                 builder.Prompts.text(session, cob + 'Indiquez l\'adresse où vous vous trouvez !');
                
+                // Auto complete
+                //google locations
             }
             
         },

@@ -71,10 +71,10 @@ var password = function(){
             if(!isNaN(pwUser)){
                 // Verification pw
                 if(pwUser == pwGen && x == 1){
-                    next();
+                    next(session.dialogData.tmp);
                 }else if(x == 0){
                     if(pwUser == pwGen){
-                        next({response : true});
+                        next({response : true}); //A modifier
                     }else{
                         next({response : false});   
                     }

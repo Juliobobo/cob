@@ -150,6 +150,13 @@ dialog.matches('makeMoneyTransfert', bank.makeMoneyTransfert);
 /************************************************/
 
 /**
+ * Consultation de comptes
+ **/
+dialog.matches('accessMoney', bank.accessMoney); 
+/************************************************/
+
+
+/**
  * Voir ces virements 
  **/
 // dialog.matches('accessMoneyTransfert', conv.accessMoneyTransfert); 

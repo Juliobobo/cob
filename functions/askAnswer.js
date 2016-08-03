@@ -30,7 +30,6 @@ module.exports = {
             }else if(session.dialogData.bestWay){
                 bestWay = session.dialogData.bestWay;
             }
-
             if(!bestWay){
                 next({response: connaissance[args.intent]});
             }else{

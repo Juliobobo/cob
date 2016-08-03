@@ -27,9 +27,9 @@ module.exports = {
         // Traitement
         function(session, results){
             // f.debug('Effectuer un virement');
-            session.send(cob + 'Bienvenue %s dans l\'espace "Effectuer un virement"', session.dialogData.name);
+            session.send(cob + 'Bienvenue %s dans l\'espace "Effectuer un virement"', session.userData.name);
 
-            var data = results.response = session.dialogData.tmp;
+            var data = session.dialogData.tmp;
 
             if(data){
                 data = data.response;  
@@ -124,4 +124,108 @@ module.exports = {
         }
         
     ],
+    
+    //Consultations comptes
+    accessMoney:[
+        a.question('action'),
+        
+        //Identification
+        ident.ident(1),
+        ident.treatmentOne(),
+        ident.treatmentTwo(),
+        ident.treatmentThree(),
+        ident.treatmentFour(),
+        // //Fonction authentification
+        auth.auth(),
+        auth.checkingPassword(1),
+        
+        //Traitement
+        function(session, results){
+            if(results.response){
+    
+                var data = results.response.entity;
+
+                if(data) data = 'compte';
+
+                var name = session.userData.name ;
+                var surname = session.userData.surname ;
+                var idProp = name.concat(surname);
+                
+                session.dialogData.idProp = idProp;
+                
+                var nextStep = false;
+                var nbCompte = 3;
+                
+                //On recherche dans la fausse bdd si idProp existe
+                for(var i = 1 ; i < nbCompte; i++){
+                    if(bdd.prop[i] == idProp){
+                        nextStep = true;
+                    }    
+                }
+                
+                if(nextStep){
+                    //recupuréré les ids des compte
+                    var compteId = [];
+                    
+                    for(var i = 0; i < nbCompte; i++){
+                        compteId[i] = bdd['prop_compte'][idProp]['id_compte_'.concat(i+1)];
+                    }
+                    
+                    //recup les infos de chaque comptes
+                    var dataCompte = [];
+                    for(var i = 0; i < compteId.length; i++){
+                        dataCompte[i] = bdd['comptes'][compteId[i]]['name']; 
+                    }
+                    
+                    
+                    //On liste les comptes
+                    builder.Prompts.choice(session, cob + "Vos comptes : ", dataCompte);
+                    
+                }else{
+                    session.send(cob + 'Vous n\'avez pas de comptes !');
+                }
+                
+    
+            }else{
+                session.send(cob + prompts.error);
+            }
+        },
+        
+        function(session, results){
+            if(results.response){
+                var data = results.response.entity;
+                var nbCompte = 3;
+                
+                //On recup les ids en regarde le bon compte
+                var compteId = [];
+                for(var i = 0; i < nbCompte; i++){
+                        compteId[i] = bdd['prop_compte'][session.dialogData.idProp]['id_compte_'.concat(i+1)];
+                        
+                        if(data == bdd['comptes'][compteId[i]]['name']){
+                            
+                            var compte = bdd['comptes'][compteId[i]]['detail_compte'];
+                            
+                            var nbOp = 4;
+                            
+                            
+                            var ope = [];
+                            for(var i = 0; i < nbOp ; i++){
+                                ope[i] = compte[i+1].date + ', '
+                                            + compte[i+1].cause + ', '
+                                            + compte[i+1].montant;
+                            } 
+                            
+                            session.send(cob + 'Opérations effectuées: \n' 
+                                                + ope[0] + '\n'
+                                                + ope[1] + '\n'
+                                                + ope[2] + '\n'
+                                                + ope[3] );
+                        }
+                }
+            }else{
+               session.send(cob + prompts.error); 
+            }
+        }
+        
+    ]
 }

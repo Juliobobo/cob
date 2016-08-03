@@ -66,6 +66,7 @@ exports.direBonjour = function() { ... };
 - Système de récupération d'info (google news)
 - Système d'aide (désactivé et à refaire)
 - Système de virement (à paufiner)
+- Système de consultation de compte
 
 
 *************************
