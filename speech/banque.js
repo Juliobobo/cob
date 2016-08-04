@@ -215,7 +215,7 @@ module.exports = {
                                             + compte[i+1].montant;
                             } 
                             
-                            session.send(cob + 'Opérations effectuées: \n' 
+                            session.send(cob + 'Opérations effectuées: \n\n' 
                                                 + ope[0] + '\n'
                                                 + ope[1] + '\n'
                                                 + ope[2] + '\n'

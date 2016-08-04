@@ -79,10 +79,10 @@ var password = function(){
                         next({response : false});   
                     }
                 }else{
-                    session.send(cob + 'Mauvais password !');
+                    session.send(cob + 'Mauvais password, opération annulée !');
                 }
             }else{
-               session.send(cob + 'Mauvais password !'); 
+               session.send(cob + 'Mauvais password, opération annulée !'); 
             }
         };
     }

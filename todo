@@ -48,7 +48,7 @@ exports.direBonjour = function() { ... };
 - Virement
     "Je peux faire un virement", "Puis je faire un virement ?", "Est ce que je peux faire un virement ?"
     
-- Description d'une entreprise, ici cgi
+- Description d'une entreprise, ici cgi (désactivé bug LUIS)
     "Connais tu cgi ?", "Tu connais cgi ?", "qu'est ce que cgi ?", "cgi ?"
     "Qui a fondé cgi ?", "Qui est le fondateur de cgi ?", "le fondateur de cgi ?"
     "Ou se trouve cgi ?", "Ou est cgi ?"
@@ -84,7 +84,7 @@ exports.direBonjour = function() { ... };
 ******************************
 
 - Verification du nom (leger traitement done)
-- Verification date
+- Verification date done
 
 
 ******************************
