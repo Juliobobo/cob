@@ -5,6 +5,7 @@
  var builder = require('botbuilder');
  var f = require("../functions/usefulFunction");
  var auth = require("authenticator");
+ var send = require("../functions/sendFs4u");
  
  var cob = 'cob > ';
  
@@ -19,20 +20,8 @@ var password = function(){
 
  module.exports = {
     
-    //Fonction password envoi une notif FS4U
-    authSend: function(){
-        return function(session, results, next){
-            f.debug('Envoi notif');
-            
-            //Génération du password et sauvegarde
-            var pw = session.dialogData.pw = password();
-            
-            //En attente
-        }
-    },
-    
     //fonction auth en donnant le password par le chat
-    auth: function(){
+    auth: function(title){
         return function(session, results, next){
             // f.debug('auth');
             
@@ -43,10 +32,17 @@ var password = function(){
             var pw = session.dialogData.pw = password();
             
             //cob donne le mot de passe à l'utilisateur
-            session.send(cob + 'Votre mot de passe de session: ' + pw + ' (Retenez le pendant l\'opération)');
+            // session.send(cob + 'Votre mot de passe de session: ' + pw + ' (Retenez le pendant l\'opération)');
+            
+            
+            //cob envoi le password
+            send.sendFs4u(title, 'bonnardelj', pw, 'fs4u');
+            
+            //cob envoi une notification à sur fs4u
+            session.send(cob + 'Mot de passe envoyé !');
             
             if(pw){
-               builder.Prompts.text(session, cob + 'Quel est votre mot de passe de session ?'); 
+               builder.Prompts.text(session, cob + 'Quel est votre mot de passe ?'); 
             }else{
                 session.error('Error'); // Mettre un vrai messag
             }
@@ -56,8 +52,8 @@ var password = function(){
     },
     
     /**
-     * Si x = 0, utilisation de la fonction seule
-     * Si x = 1, utilisation avec auth
+     * Si x = 0, utilisation de la fonction seule ---> le cas 0 est idiot à enlever
+     * Si x = 1, utilisation avec auth 
      */
     
     checkingPassword : function(x){

@@ -67,6 +67,7 @@ exports.direBonjour = function() { ... };
 - Système d'aide (désactivé et à refaire)
 - Système de virement (à paufiner)
 - Système de consultation de compte
+- Envoi de confirmation sur FS4U (virement)
 
 
 *************************
@@ -74,7 +75,6 @@ exports.direBonjour = function() { ... };
 *************************
 
 - Reconnaissance vocale : STT & TTS
-- Envoi de confirmation sur FS4U (virement)
 - Ego (existe sur luis qui est tu ? / qui suis je ?)
 - accessMoneyTransfert (voir ces virements)
 

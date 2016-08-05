@@ -21,7 +21,7 @@ module.exports = {
         ident.treatmentThree(),
         ident.treatmentFour(),
         //Fonction authentification
-        auth.auth(),
+        auth.auth('Prelevement'),
         auth.checkingPassword(1),
         
         // Traitement
@@ -106,14 +106,17 @@ module.exports = {
                                             session.dialogData.transfertHow,
                                             session.dialogData.transfertWhen);
                 
-                builder.Prompts.text(session, 'Confirmation, tapez votre mot de passe de session !');
+                
+                // builder.Prompts.text(session, 'Confirmation, tapez votre mot de passe !');
+                builder.Prompts.choice(session, cob + 'ok ?', "oui|non"); //Le cas non est non traité
             }else{
                 session.send(cob + prompts.error);
             }
         },
         
         //Il faut securiser en envoyer un code a FS4U en attente de la rep d'ugo
-        auth.checkingPassword(0),
+        auth.auth('Confirmation'),
+        auth.checkingPassword(1),
         
         function(session, results){
             if(results.response){
