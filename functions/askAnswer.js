@@ -9,7 +9,6 @@ var f = require('../functions/usefulFunction');
 var connaissance = require('../data/knowledge');
 var prompts = require('../data/prompts');
 
-var cob = 'cob > ';
 
 module.exports = {
     /**
@@ -46,9 +45,9 @@ module.exports = {
             // f.debug('Reponse standard');
             if(results.response){
                 var data = results.response;
-                session.send(cob + connaissance[data.entity][champsInfo]);
+                session.send(connaissance[data.entity][champsInfo]);
             }else{
-                session.send(cob + prompts.error);
+                session.send(prompts.error);
             }
         };
     }

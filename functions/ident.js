@@ -3,11 +3,7 @@
  **/
  
  var builder = require('botbuilder');
- 
- var cob = 'cob > ';
- 
- 
- 
+
  //================================================================
   /**
   * Fonction de vérification de la validé du nom et / ou prénom
@@ -42,9 +38,9 @@
 
         if(!name){
             session.dialogData.nameModif = true;
-            builder.Prompts.text(session, cob + "Quel est votre prénom ?");
+            builder.Prompts.text(session, "Quel est votre prénom ?");
         }else{
-            builder.Prompts.confirm(session, cob + "Tu t\'appelles " + name + " ?");
+            builder.Prompts.confirm(session, "Tu t\'appelles " + name + " ?");
         }
      };
  }
@@ -70,15 +66,15 @@
             if(!session.userData.surname){
                 session.dialogData.nameModif = false;
                 session.dialogData.surnameModif = true;
-                builder.Prompts.text(session,cob + "Quel est votre nom de famille ?");    
+                builder.Prompts.text(session, "Quel est votre nom de famille ?");    
             }else{
-                builder.Prompts.confirm(session, cob + "Tu t\'appelles "+ session.userData.name 
+                builder.Prompts.confirm(session, "Tu t\'appelles "+ session.userData.name 
                                         +  ' ' + session.userData.surname + " ?"); 
             }
         }
       }else{
             session.dialogData.nameModif = true;
-            builder.Prompts.text(session, cob + "Quel est votre prénom ?");
+            builder.Prompts.text(session, "Quel est votre prénom ?");
       }
      };
  }
@@ -97,9 +93,9 @@
                      
                      if(!session.userData.surname){
                         session.dialogData.surnameModif = true;
-                        builder.Prompts.text(session,cob + "Quel est votre nom de famille ?");    
+                        builder.Prompts.text(session, "Quel est votre nom de famille ?");    
                     }else{
-                        builder.Prompts.confirm(session, cob + "Tu t\'appelles "+ session.userData.name 
+                        builder.Prompts.confirm(session, "Tu t\'appelles " + session.userData.name 
                                             +  ' ' + session.userData.surname + " ?"); 
                     }
                 }
@@ -113,7 +109,7 @@
             }
          }else{
             session.dialogData.surnameModif = true;
-            builder.Prompts.text(session,cob + "Quel est votre nom de famille ?"); 
+            builder.Prompts.text(session, "Quel est votre nom de famille ?"); 
         }
      };
  }
@@ -129,7 +125,7 @@
             }
         }else{
             session.dialogData.surnameModif = true;
-            builder.Prompts.text(session,cob + "Quel est votre nom de famille ?"); 
+            builder.Prompts.text(session, "Quel est votre nom de famille ?"); 
         }
      };
  }

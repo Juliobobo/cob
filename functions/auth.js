@@ -3,11 +3,10 @@
  **/
  
  var builder = require('botbuilder');
- var f = require("../functions/usefulFunction");
+//  var f = require("../functions/usefulFunction");
  var auth = require("authenticator");
  var send = require("../functions/sendFs4u");
- 
- var cob = 'cob > ';
+ var prompts = require('../data/prompts');
  
 //Fonction qui genere un code 6 digits
 var password = function(){
@@ -39,12 +38,12 @@ var password = function(){
             send.sendFs4u(title, 'bonnardelj', pw, 'fs4u');
             
             //cob envoi une notification à sur fs4u
-            session.send(cob + 'Mot de passe envoyé !');
+            // session.send(cob + 'Mot de passe envoyé !');
             
             if(pw){
-               builder.Prompts.text(session, cob + 'Quel est votre mot de passe ?'); 
+               builder.Prompts.text(session, 'Mot de passe envoyé !' + '\n' + 'Quel est votre mot de passe ?'); 
             }else{
-                session.error('Error'); // Mettre un vrai messag
+                session.send(prompts.error); // Mettre un vrai messag
             }
             
             
@@ -75,10 +74,10 @@ var password = function(){
                         next({response : false});   
                     }
                 }else{
-                    session.send(cob + 'Mauvais password, opération annulée !');
+                    session.send('Mauvais password, opération annulée !');
                 }
             }else{
-               session.send(cob + 'Mauvais password, opération annulée !'); 
+               session.send('Mauvais password, opération annulée !'); 
             }
         };
     }

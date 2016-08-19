@@ -16,7 +16,6 @@ var w = require("../functions/wantToKnow");
 var auth = require("../functions/auth");
 var ident = require("../functions/ident");
 
-var cob = 'cob > ';
 
 module.exports = {
     salutation :[
@@ -43,7 +42,7 @@ module.exports = {
             
             
             if(!session.dialogData.name){
-                session.send(cob + 'Bonjour, ' + prompts.accueil.toLowerCase());    
+                session.send('Bonjour, ' + prompts.accueil.toLowerCase());    
             }else{
                 var classe = 'salutation';
                 var date = new Date();
@@ -61,16 +60,16 @@ module.exports = {
                 }
                 
                 if(heure < 8){
-                    session.send(cob + connaissance[classe]['matin'] + ' %s !', userName);
+                    session.send(connaissance[classe]['matin'] + ' %s !', userName);
                 }else if(heure > 11  && heure < 13){
-                    session.send(cob + connaissance[classe]['midi'] + ' %s !', userName);
+                    session.send(connaissance[classe]['midi'] + ' %s !', userName);
                 }else if(heure > 18){
-                    session.send(cob + connaissance[classe]['soir'] + ' %s !', userName);
+                    session.send(connaissance[classe]['soir'] + ' %s !', userName);
                 }else{
-                    session.send(cob + connaissance[classe]['default']+ ' %s !', userName);
+                    session.send(connaissance[classe]['default']+ ' %s !', userName);
                 }
                 
-                session.send(cob + prompts.accueil);    
+                session.send(prompts.accueil);    
             }
             
         }
@@ -82,7 +81,7 @@ module.exports = {
             // f.debug('Remerciment');
             if(results.response){
                  var r = f.rand(1,4);
-                session.send(cob + results.response[r] );
+                session.send(results.response[r] );
 
             }
         }
@@ -98,18 +97,18 @@ module.exports = {
                 if(data.entity == 'mon' || data.entity == 'je'){
                     if(!session.userData.name){
                         // f.debug('Pas implémenté');
-                        session.send(cob + 'Je ne sais pas');
+                        session.send('Je ne sais pas');
 //                        session.beginDialog('/profile');
                     }else{
-                        session.send(cob + 'Tu t\'appelles %s !', session.userData.name);
+                        session.send('Tu t\'appelles %s !', session.userData.name);
                     }
                 }
                 if(data.entity == 'ton' || data.entity == 'tu'){
-                    session.send(cob + 'Je m\'appelle cob !');
+                    session.send('Je m\'appelle cob !');
                 }
                 
             }else{
-                session.send(cob + prompts.error);
+                session.send(prompts.error);
             }
         }
     ],
@@ -120,9 +119,9 @@ module.exports = {
             // f.debug('sante');
             if (results.response){
                 var r = f.rand(1, 3);
-                session.send(cob + results.response[r] + ' Et toi ?' );
+                session.send(results.response[r] + ' Et toi ?' );
             }else{
-                session.send(cob + prompts.error);
+                session.send(prompts.error);
             }
         }
     ],
@@ -151,17 +150,17 @@ module.exports = {
                 
                 
                 if(!pref){
-                    builder.Prompts.text(session, cob + data['qChoice'] + '\n\n' +
+                    builder.Prompts.text(session, data['qChoice'] + '\n\n' +
                         data['1'] + ' ou ' + data['all'].toLowerCase() + '\n \n source: ' +
                         data['source']);    
                 }else{
                     pref = pref.toLowerCase();
                     if(pref == 'tous'){
-                        builder.Prompts.text(session, cob + data['qChoice'] + '\n\n' +
+                        builder.Prompts.text(session, data['qChoice'] + '\n\n' +
                         data['1'] + ' ou ' + data['all'].toLowerCase() + '\n \n source: ' +
                         data['source']);
                     }else{
-                        builder.Prompts.text(session, cob + data['qChoice'] + '\n\n' +
+                        builder.Prompts.text(session, data['qChoice'] + '\n\n' +
                         data['1'] + ' ' + pref + ', ' + data['allPref'].toLowerCase() 
                          + pref + ' ou '+ data['all'].toLowerCase() 
                          + '\n \n source: ' + data['source']);    
@@ -169,7 +168,7 @@ module.exports = {
                 }
                 
             }else{
-                session.send(cob + prompts.error);
+                session.send(prompts.error);
             }
         },
         
@@ -191,11 +190,11 @@ module.exports = {
                         case 'sante':
                             if(nTitle == 'laderniere' || nTitle == 'ladernierenews'){
                                 s.scraping('sante', function(err, t){
-                                    session.send(cob + t[0]);
+                                    session.send(t[0]);
                                 });
                             }else if(nTitle == 'toutes'){
                                 s.scraping('sante', function(err, t){
-                                    session.send(cob + t.join("\n *"));
+                                    session.send(t.join("\n *"));
                                 });
                             }else{
                                nextStep = 1; 
@@ -205,11 +204,11 @@ module.exports = {
                         case 'sport':
                             if(nTitle == 'laderniere' || nTitle == 'ladernierenews'){
                                 s.scraping('sport', function(err, t){
-                                    session.send(cob + t[0]);
+                                    session.send(t[0]);
                                 });
                             }else if(nTitle == 'toutes'){
                                 s.scraping('sport', function(err, t){
-                                    session.send(cob + t.join("\n *"));
+                                    session.send(t.join("\n *"));
                                 });
                             }else{
                                nextStep = 1;
@@ -219,11 +218,11 @@ module.exports = {
                             case 'culture':
                             if(nTitle == 'laderniere' || nTitle == 'ladernierenews'){
                                 s.scraping('culture', function(err, t){
-                                    session.send(cob + t[0]);
+                                    session.send(t[0]);
                                 });
                             }else if(nTitle == 'toutes'){
                                 s.scraping('culture', function(err, t){
-                                    session.send(cob + t.join("\n *"));
+                                    session.send(t.join("\n *"));
                                 });
                             }else{
                                nextStep = 1;
@@ -234,11 +233,11 @@ module.exports = {
                             case 'science':
                             if(nTitle == 'laderniere' || nTitle == 'ladernierenews'){
                                 s.scraping('science', function(err, t){
-                                    session.send(cob + t[0]);
+                                    session.send(t[0]);
                                 });
                             }else if(nTitle == 'toutes'){
                                 s.scraping('science', function(err, t){
-                                    session.send(cob + t.join("\n *"));
+                                    session.send(t.join("\n *"));
                                 });
                             }else{
                                nextStep = 1;
@@ -249,11 +248,11 @@ module.exports = {
                             case 'economie':
                             if(nTitle == 'laderniere' || nTitle == 'ladernierenews'){
                                 s.scraping('economie', function(err, t){
-                                    session.send(cob + t[0]);
+                                    session.send(t[0]);
                                 });
                             }else if(nTitle == 'toutes'){
                                 s.scraping('economie', function(err, t){
-                                    session.send(cob + t.join("\n *"));
+                                    session.send(t.join("\n *"));
                                 });
                             }else{
                                nextStep = 1;
@@ -264,11 +263,11 @@ module.exports = {
                             case 'international':
                             if(nTitle == 'laderniere' || nTitle == 'ladernierenews'){
                                 s.scraping('international', function(err, t){
-                                    session.send(cob + t[0]);
+                                    session.send(t[0]);
                                 });
                             }else if(nTitle == 'toutes'){
                                 s.scraping('international', function(err, t){
-                                    session.send(cob + t.join("\n *"));
+                                    session.send(t.join("\n *"));
                                 });
                             }else{
                                nextStep = 1;
@@ -279,11 +278,11 @@ module.exports = {
                             case 'une':
                             if(nTitle == 'laderniere' || nTitle == 'ladernierenews'){
                                 s.scraping('une', function(err, t){
-                                    session.send(cob + t[0]);
+                                    session.send(t[0]);
                                 });
                             }else if(nTitle == 'toutes'){
                                 s.scraping('une', function(err, t){
-                                    session.send(cob + t.join("\n *"));
+                                    session.send(t.join("\n *"));
                                 });
                             }else{
                                nextStep = 1;
@@ -294,35 +293,35 @@ module.exports = {
                         default:
                             if(nTitle == 'laderniere' || nTitle == 'ladernierenews'){
                                 s.scraping('', function(err, t){
-                                    session.send(cob + t[0]);
+                                    session.send(t[0]);
                                 });
                             }else if(nTitle == 'toutes'){
                                 s.scraping('', function(err, t){
-                                    session.send(cob + t.join("\n *"));
+                                    session.send(t.join("\n *"));
                                 });
                             }
                     }
                 }else{
                     if(nTitle == 'laderniere' || nTitle == 'ladernierenews'){
                         s.scraping('', function(err, t){
-                            session.send(cob + t[0]);
+                            session.send(t[0]);
                         });
                     }else if(nTitle == 'toutes'){
                         s.scraping('', function(err, t){
-                            session.send(cob + t.join("\n *"));
+                            session.send(t.join("\n *"));
                         });
                     }else{
-                      session.send(cob + prompts.error); 
+                      session.send(prompts.error); 
                     }
                 }
                 
                 if(nextStep == 1){
                     s.scraping('', function(err, t){
-                            session.send(cob + t.join("\n *"));
+                            session.send(t.join("\n *"));
                     });
                 }
             }else{
-               session.send(cob + prompts.error); 
+               session.send(prompts.error); 
             }
         },
     ]

@@ -7,7 +7,6 @@ var auth = require("../functions/auth");
 var ident = require("../functions/ident");
 var geolocation = require("../functions/geolocation");
 
-var cob = 'cob > ';
 
 module.exports = {
     assurance : [
@@ -26,15 +25,16 @@ module.exports = {
         // geolocation.geolocation(), 
         
         function(session, results, next){
-            session.send(cob + "Bienvenue "+ session.userData.name 
-                                        +  ' ' + session.userData.surname + " !");
+            // session.send("Bienvenue "+ session.userData.name 
+            //                             +  ' ' + session.userData.surname + " !");
             if(results.response){
                 // f.debug('true');
                session.dialogData.assurance = 0;
                next();
             }else{
                 session.dialogData.assurance = 1;
-                builder.Prompts.text(session, cob + 'Indiquez l\'adresse où vous vous trouvez !');
+                builder.Prompts.text(session, "Bienvenue "+ session.userData.name 
+                                        +  ' ' + session.userData.surname + ", \n\n" + 'Indiquez l\'adresse où vous vous trouvez !');
                
                 // Auto complete
                 //google locations
@@ -55,12 +55,12 @@ module.exports = {
                 if(bdd['assure'][i]['name'] == session.userData.name 
                     && bdd['assure'][i]['surname'] == session.userData.surname){
                     if(bdd['assure'][i]['depannage']){
-                        session.send(cob + 'Le dépanneur arrive dans les 10min');
+                        session.send('Le dépanneur arrive dans les 10min');
                     }else{
-                        session.send(cob + 'Vous n\'êtes pas éligible à l\'offre dépannage !');
+                        session.send('Vous n\'êtes pas éligible à l\'offre dépannage !');
                     }
                 }else{
-                   session.send(cob + 'Vous n\'êtes pas client chez nous !'); 
+                   session.send('Vous n\'êtes pas client chez nous !'); 
                 }
                     
             }

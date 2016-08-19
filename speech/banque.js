@@ -7,8 +7,6 @@ var ident = require("../functions/ident");
 var a = require('../functions/askAnswer');
 var bdd = require("../data/bdd");
 
-var cob = 'cob > ';
-
 
 module.exports = {
     makeMoneyTransfert:[
@@ -27,7 +25,7 @@ module.exports = {
         // Traitement
         function(session, results){
             // f.debug('Effectuer un virement');
-            session.send(cob + 'Bienvenue %s dans l\'espace "Effectuer un virement"', session.userData.name);
+            // session.send('Bienvenue %s dans l\'espace "Effectuer un virement"', session.userData.name);
 
             var data = session.dialogData.tmp;
 
@@ -35,13 +33,13 @@ module.exports = {
                 data = data.response;  
                 
                 //Who
-                builder.Prompts.choice(session, cob + connaissance[data.entity]['who'], bdd['destinataire']);
+                builder.Prompts.choice(session, 'Bienvenue ' + session.userData.name + ' dans l\'espace "Effectuer un virement"' + '\n\n' + connaissance[data.entity]['who'], bdd['destinataire']);
                 
                 // A TROUVER : CHANGER LE I DIDN'T UNDERSTAND QUAND IL Y A UNE ERREUR
                 // MODIFIER LES PROMPTS
                 
             }else{
-              session.send(cob + prompts.error); 
+              session.send(prompts.error); 
             }
         },
         function(session, results){
@@ -52,12 +50,12 @@ module.exports = {
                 var infoDest = bdd['destinataire'][results.response.entity];
                 
                 
-                session.send(cob + 'Titulaire: %(titulaire)s \n '
-                                   + 'Domiciliation: %(domiciliation)s \n'
-                                   + 'Référence Bancaire: %(refBancaire)s \n'
-                                   + 'IBAN: %(IBAN)s \n'
-                                   + 'BIC: %(BIC)s \n'
-                                   + 'Banque: %(banque)s' , infoDest );
+                // session.send( 'Titulaire: ' + infoDest.titulaire + '\n'
+                //                   + 'Domiciliation: ' + infoDest.domiciliation + '\n'
+                //                   + 'Référence Bancaire: ' + infoDest.refBancaire + '\n'
+                //                   + 'IBAN: ' + infoDest.IBAN + '\n'
+                //                   + 'BIC: ' + infoDest.BIC + '\n'
+                //                   + 'Banque: ' + infoDest.banque);
                 
                 //On enregistre le result
                 session.dialogData.transfertWho = results.response;
@@ -66,10 +64,15 @@ module.exports = {
                 var data = session.dialogData.tmp.response;
                 
                 //How
-                builder.Prompts.number(session, cob + connaissance[data.entity]['how']);
+                builder.Prompts.number(session, 'Titulaire: ' + infoDest.titulaire + '\n'
+                                   + 'Domiciliation: ' + infoDest.domiciliation + '\n'
+                                   + 'Référence Bancaire: ' + infoDest.refBancaire + '\n'
+                                   + 'IBAN: ' + infoDest.IBAN + '\n'
+                                   + 'BIC: ' + infoDest.BIC + '\n'
+                                   + 'Banque: ' + infoDest.banque + '\n\n' + connaissance[data.entity]['how']);
                 
             }else{
-                session.send(cob + prompts.error);
+                session.send(prompts.error);
             }
         },
         function(session, results){
@@ -83,11 +86,11 @@ module.exports = {
                 var data = session.dialogData.tmp.response;
                 
                 //How
-                builder.Prompts.text(session, cob + connaissance[data.entity]['when']
+                builder.Prompts.text(session, connaissance[data.entity]['when']
                 + ' jj/mm/aaaa');
                 
             }else{
-                session.send(cob + prompts.error);
+                session.send(prompts.error);
             }
         },
         function(session, results){
@@ -99,18 +102,19 @@ module.exports = {
                 session.dialogData.transfertWhen = results.response;
                 
                 // f.debug(session.dialogData);
-                session.send(cob + 'Récapitulatif : \n'
-                                    + '%s \n'
-                                    + '%s€ \n'
-                                    + '%s', session.dialogData.transfertWho.entity,
-                                            session.dialogData.transfertHow,
-                                            session.dialogData.transfertWhen);
+                // session.send('Récapitulatif : \n'
+                //                     + session.dialogData.transfertWho.entity + '\n'
+                //                     + session.dialogData.transfertHow + '€ \n'
+                //                     + session.dialogData.transfertWhen);
                 
                 
                 // builder.Prompts.text(session, 'Confirmation, tapez votre mot de passe !');
-                builder.Prompts.choice(session, cob + 'ok ?', "oui|non"); //Le cas non est non traité
+                builder.Prompts.choice(session, 'Récapitulatif : \n'
+                                    + session.dialogData.transfertWho.entity + '\n'
+                                    + session.dialogData.transfertHow + '€ \n'
+                                    + session.dialogData.transfertWhen + '\n\n ok ?', "oui|non"); //Le cas non est non traité
             }else{
-                session.send(cob + prompts.error);
+                session.send(prompts.error);
             }
         },
         
@@ -120,9 +124,9 @@ module.exports = {
         
         function(session, results){
             if(results.response){
-                session.send(cob + "Transaction effectuée !");
+                session.send("Transaction effectuée !");
             }else{
-                session.send(cob + "Transaction annulée, veuillez recommencer l'opération !");
+                session.send("Transaction annulée, veuillez recommencer l'opération !");
             }
         }
         
@@ -182,15 +186,15 @@ module.exports = {
                     
                     
                     //On liste les comptes
-                    builder.Prompts.choice(session, cob + "Vos comptes : ", dataCompte);
+                    builder.Prompts.choice(session, "Vos comptes : ", dataCompte);
                     
                 }else{
-                    session.send(cob + 'Vous n\'avez pas de comptes !');
+                    session.send('Vous n\'avez pas de comptes !');
                 }
                 
     
             }else{
-                session.send(cob + prompts.error);
+                session.send(prompts.error);
             }
         },
         
@@ -218,7 +222,7 @@ module.exports = {
                                             + compte[i+1].montant;
                             } 
                             
-                            session.send(cob + 'Opérations effectuées: \n\n' 
+                            session.send('Opérations effectuées: \n\n' 
                                                 + ope[0] + '\n'
                                                 + ope[1] + '\n'
                                                 + ope[2] + '\n'
@@ -226,7 +230,7 @@ module.exports = {
                         }
                 }
             }else{
-               session.send(cob + prompts.error); 
+               session.send(prompts.error); 
             }
         }
         
