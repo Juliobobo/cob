@@ -5,8 +5,6 @@
  var brain = require("../data/knowledge");
  var f = require("../functions/usefulFunction");
  
- var cob = 'cob > ';
- 
  module.exports = {
   
       /**
@@ -54,8 +52,7 @@
              //On passe à 2 les checks
              session.userData.checkNews = 2;
              
-             session.send(cob + brain['dontKnow']['wantToKnow']);
-             builder.Prompts.text(session, cob + brain[type]['choice']);
+             builder.Prompts.text(session, brain['dontKnow']['wantToKnow'] + ' ' + brain[type]['choice']);
            
            }else{
              //On passe à 1 les checks en verifiant qu'il soit différent de 2
@@ -95,7 +92,7 @@
            switch (type) {
             case 'wNews':
              if(session.userData.checkNews == 2){
-              session.send(cob + brain['know']['know'] + ' ' + brain[type]['kNews'] 
+              session.send(brain['know']['know'] + ' ' + brain[type]['kNews'] 
               + '%s' + ' !', session.userData.wNews);
              }
              break;
