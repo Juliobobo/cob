@@ -37,14 +37,19 @@ server.listen(10443, function(){
 
 // Create chat bot
 var connector = new builder.ChatConnector({
-	appId: "ac71f72c-2c77-40f4-af7b-c4931f8110ed",
-	appPassword: "DrjiLpupErtsdqSYDgcMTVx"
+	//compte perso
+// 	appId: "ac71f72c-2c77-40f4-af7b-c4931f8110ed",
+// 	appPassword: "DrjiLpupErtsdqSYDgcMTVx"
+	
+	//compte cgi
+	appId: "c9f4b46f-7fe8-48fb-92fd-3d3bdad3c8c6",
+	appPassword: "0Pt09f6jqUuG3xaa2CbX92b"
 });
 
 var bot = new builder.UniversalBot(connector);
 server.post('/api/messages', connector.listen());
 
-/**
+/**1
  * Mode console
  **/
 //Je me connecte en mode console
@@ -58,7 +63,11 @@ server.post('/api/messages', connector.listen());
 //=========================================================
 
 //On connecte LUIS
-var model = process.env.model || 'https://api.projectoxford.ai/luis/v1/application?id=95517bc1-76fc-4d65-81a9-63456aee5245&subscription-key=e44f708e8fb2425587490ec44f9eef66&q=';
+//compte perso
+// var model = process.env.model || 'https://api.projectoxford.ai/luis/v1/application?id=95517bc1-76fc-4d65-81a9-63456aee5245&subscription-key=e44f708e8fb2425587490ec44f9eef66&q=';
+
+//compte cgi
+var model = process.env.model || 'https://api.projectoxford.ai/luis/v1/application?id=2c3632ab-74e8-4fc3-ba6b-dcf6e1375ee8&subscription-key=a4d547a86a5e4a8e88acf3a0dc029f34&q';
 var recognizer = new builder.LuisRecognizer(model);
 var dialog = new builder.IntentDialog({ recognizers: [recognizer] });
 

@@ -60,6 +60,10 @@ var password = function(){
             // f.debug('checkPw');
             
             var pwUser = results.response;
+            
+            //en enleve les espaces
+            pwUser = pwUser.replace(/ /g, '');
+            
             var pwGen = session.dialogData.pw;
             
             //Verification que pwUser = nombre

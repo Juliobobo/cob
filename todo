@@ -92,7 +92,7 @@ exports.direBonjour = function() { ... };
 ******************************
 
 - Le bot me connait toujours quand on rafraichit la page par exemple ??
-
+- Dans l'identification, bug sur la séquence No pour le prénom et nom famille il le saute 
 
 ******************
 *    Scénario    *
