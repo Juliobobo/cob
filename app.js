@@ -45,9 +45,13 @@ var connector = new builder.ChatConnector({
 	// appId: "ac71f72c-2c77-40f4-af7b-c4931f8110ed",
 	// appPassword: "DrjiLpupErtsdqSYDgcMTVx"
 	
-	// compte cgi
+	// compte cgi lucia
 	appId: "c9f4b46f-7fe8-48fb-92fd-3d3bdad3c8c6",
 	appPassword: "0Pt09f6jqUuG3xaa2CbX92b"
+	
+	// lucia_test for heroku
+	// appId: "d0db8947-f9d8-49ce-af2e-347d7ce40b00",
+	// appPassword: "wiAECQS7omxfB3GUiwD7MxQ"
 });
 
 var bot = new builder.UniversalBot(connector);
@@ -70,9 +74,13 @@ server.post('/api/messages', connector.listen());
 // 	// appId: "ac71f72c-2c77-40f4-af7b-c4931f8110ed",
 // 	// appPassword: "DrjiLpupErtsdqSYDgcMTVx"
 	
-// 	// compte cgi
+// 	// compte cgi lucia
 // 	appId: "c9f4b46f-7fe8-48fb-92fd-3d3bdad3c8c6",
 // 	appPassword: "0Pt09f6jqUuG3xaa2CbX92b"
+	
+	// //lucia_test for heroku
+	// appId: "d0db8947-f9d8-49ce-af2e-347d7ce40b00",
+	// appPassword: "wiAECQS7omxfB3GUiwD7MxQ"
 // });
 
 // var bot = new builder.UniversalBot(connector);
