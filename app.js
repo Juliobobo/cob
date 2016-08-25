@@ -31,7 +31,7 @@ var server = restify.createServer({
   name: "cob",
 });
 
-server.listen(process.env.PORT || 3000, function(){
+server.listen(process.env.PORT || 8080, function(){
 	console.log('%s listening to %s', server.name, server.url); 
 });
 
