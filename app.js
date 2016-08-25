@@ -26,9 +26,9 @@ var bank = require("./speech/banque");
 
 // Setup Restify Server
 var server = restify.createServer({
-  certificate: fs.readFileSync("https/server.crt.pem"),
-  key: fs.readFileSync("https/server.key.pem"),
-  name: "cob",
+  //certificate: fs.readFileSync("https/server.crt.pem"),
+  //key: fs.readFileSync("https/server.key.pem"),
+  //name: "cob",
 });
 
 server.listen(process.env.PORT, function(){
