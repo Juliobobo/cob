@@ -67,14 +67,16 @@ exports.direBonjour = function() { ... };
 - Système d'aide (désactivé et à refaire)
 - Système de virement (à paufiner)
 - Système de consultation de compte
-- Envoi de confirmation sur FS4U (virement)
+- Envoi de confirmation sur FS4U (virement) -> Rq: on envoit tout le temps sur bonnardelj, 
+    pour corriger il suffit de faire un corrélation entre le nom donné par l'utilisateur et le pseudo de l'app avec un base de donnée.
+    ex: julien bonnardel (nom que je donne dans le tchat) == bonnardelj (pseudo de l'app)
+- Reconnaissance vocale : STT & TTS (implémenté avec la méthode voice recognition html5 cf cob_direct_line)
 
 
 *************************
 *    NON mplémentées    *
 *************************
 
-- Reconnaissance vocale : STT & TTS
 - Ego (existe sur luis qui est tu ? / qui suis je ?)
 - accessMoneyTransfert (voir ces virements)
 
@@ -84,14 +86,13 @@ exports.direBonjour = function() { ... };
 ******************************
 
 - Verification du nom (leger traitement done)
-- Verification date done
+- Verification date done (fonction fait mais non utilisé)
 
 
 ******************************
 *    Problèmes à résoudre    *
 ******************************
-
-- Le bot me connait toujours quand on rafraichit la page par exemple ??
+?
 - Dans l'identification, bug sur la séquence No pour le prénom et nom famille il le saute 
 
 ******************
@@ -119,3 +120,59 @@ c-	Parfait, Je vous géo-localise ici (Utilisation API géo localisation)
 - Confirmation de la personne, adresse correcte / autre adresse
 
 On verra la suite.....
+
+// Pour répondre à des questions plus complexes avec Luis.
+Il suffit de bien agencer les intents et entities
+Ex:
+{
+  "query": "je veux faire un virement de 10€ à mathias demain",
+  "intents": [
+    {
+      "intent": "makeThings",
+      "score": 0.999998569
+    },
+    {
+      "intent": "None",
+      "score": 0.04333819
+    }
+  ],
+  "entities": [
+    {
+      "entity": "virement",
+      "type": "action",
+      "startIndex": 17,
+      "endIndex": 24,
+      "score": 0.924247742
+    },
+    {
+      "entity": "€",
+      "type": "devise",
+      "startIndex": 31,
+      "endIndex": 31,
+      "score": 0.931767642
+    },
+    {
+      "entity": "10",
+      "type": "montant",
+      "startIndex": 29,
+      "endIndex": 30,
+      "score": 0.9318402
+    },
+    {
+      "entity": "mathias",
+      "type": "destinataire",
+      "startIndex": 35,
+      "endIndex": 41,
+      "score": 0.9110632
+    },
+    {
+      "entity": "demain",
+      "type": "builtin.datetime.date",
+      "startIndex": 43,
+      "endIndex": 48,
+      "resolution": {
+        "date": "2016-08-26"
+      }
+    }
+  ]
+}

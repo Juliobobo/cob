@@ -95,8 +95,8 @@
                         session.dialogData.surnameModif = true;
                         builder.Prompts.text(session, "Quel est votre nom de famille ?");    
                     }else{
-                        builder.Prompts.confirm(session, "Tu t\'appelles " + session.userData.name 
-                                            +  ' ' + session.userData.surname + " ?"); 
+                        builder.Prompts.choice(session, "Tu t\'appelles " + session.userData.name 
+                                            +  ' ' + session.userData.surname + " ?", "oui|non"); 
                     }
                 }
                 if(session.dialogData.surnameModif){
