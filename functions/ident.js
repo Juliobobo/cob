@@ -104,7 +104,7 @@
                      session.dialogData.surnameModif = false;
                      next({response : true});
                 }else{
-                    next({response : true});
+                    // next({response : true});
                 }
             }
          }else{
