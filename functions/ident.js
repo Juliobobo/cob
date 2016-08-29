@@ -91,7 +91,6 @@
                 if(session.dialogData.surnameModif){
                      session.userData.surname = identValid(results.response);
                      session.dialogData.surnameModif = false;
-                    //  next({response : true});
                 }
                 if(session.dialogData.nameModif){
                      session.userData.name = identValid(results.response);
@@ -106,14 +105,6 @@
                 }else{
                     next({response : true});
                 }
-                // if(session.dialogData.surnameModif){
-                //      session.userData.surname = identValid(results.response);
-                //      session.dialogData.surnameModif = false;
-                //     //  next({response : true});
-                // }else{
-                //     // next({response : true});
-                // }
-
             }
          }else{
             session.dialogData.surnameModif = true;
