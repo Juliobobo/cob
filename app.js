@@ -124,27 +124,27 @@ dialog.onDefault(builder.DialogAction.send(prompts.accueil));
 
 //Pour de l'aide
 //dialog.matches('aide', '/aide');
-//bot.dialog('/aide', [
-//    function(session){
-//        f.debug('aide');
-//        builder.Prompts.text(session, cob + prompts.reponse);
-//    },
-//    function(session, results){
-//        debug(results.response);
-//        if(results.response == 1){
-//            session.send(cob + prompts.fonctionnement);
-//            next();
-//            
-//        }
-//        if(results.response == 2){
-//            session.send(cob + prompts.implementer);
-////            session.endDialog();
-//        }
-//        else{
-////            session.endDialog();
-//        }
-//    }
-//]);
+bot.dialog('/aide', [
+    function(session){
+        f.debug('aide');
+        builder.Prompts.text(session, cob + prompts.reponse);
+    },
+    function(session, results){
+        debug(results.response);
+        if(results.response == 1){
+            session.send(cob + prompts.fonctionnement);
+            next();
+            
+        }
+        if(results.response == 2){
+            session.send(cob + prompts.implementer);
+//            session.endDialog();
+        }
+        else{
+//            session.endDialog();
+        }
+    }
+]);
 
 /**
  * On essaie de crée un bot qui parle de tout et n'importe quoi

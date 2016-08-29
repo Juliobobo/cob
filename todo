@@ -92,8 +92,8 @@ exports.direBonjour = function() { ... };
 ******************************
 *    Problèmes à résoudre    *
 ******************************
-?
-- Dans l'identification, bug sur la séquence No pour le prénom et nom famille il le saute 
+
+- Dans l'identification, bug sur la séquence No pour le prénom et nom famille il le saute à la suite
 
 ******************
 *    Scénario    *

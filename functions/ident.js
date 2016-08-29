@@ -102,9 +102,9 @@
                 if(session.dialogData.surnameModif){
                      session.userData.surname = identValid(results.response);
                      session.dialogData.surnameModif = false;
-                     next({response : true});
+                     next();
                 }else{
-                    next({response : true});
+                    next();
                 }
             }
          }else{
