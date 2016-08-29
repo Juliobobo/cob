@@ -103,6 +103,8 @@
                         builder.Prompts.confirm(session, "Tu t\'appelles " + session.userData.name 
                                             +  ' ' + session.userData.surname + " ?"); 
                     }
+                }else{
+                    next({response : true});
                 }
                 // if(session.dialogData.surnameModif){
                 //      session.userData.surname = identValid(results.response);
@@ -111,7 +113,7 @@
                 // }else{
                 //     // next({response : true});
                 // }
-                next({response : true});
+
             }
          }else{
             session.dialogData.surnameModif = true;
