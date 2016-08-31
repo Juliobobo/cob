@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 
-
+var app = require("../app");
 var builder = require('botbuilder');
 var f = require('../functions/usefulFunction');
 var connaissance = require('../data/knowledge');
@@ -311,7 +311,7 @@ module.exports = {
                             session.send(t.join("\n *"));
                         });
                     }else{
-                      session.send(prompts.error); 
+                      session.send(prompts.error);
                     }
                 }
                 
